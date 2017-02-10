@@ -1,5 +1,5 @@
 import { Helmet, withStyles } from 'vitaminjs';
-import s from './style.css'
+import s from './style.css';
 import Counter from './Counter';
 import logo from './logo.png';
 
@@ -16,18 +16,18 @@ const Index = () => (
         </div>
         <p className={s.message}>
             WelcomeWelcomeWelcomeWelcomeWelcomeWelcome !
-            <br/>
+            <br />
             Here you can see an example using <a href="https://facebook.github.io/react/">React</a>
             {' '}with an implementation of <a href="http://redux.js.org/">redux</a>.
-            <br/>
+            <br />
             Take a look at
             {' '}<a href="https://github.com/kriasoft/isomorphic-style-loader">
                 CSS Modules
             </a> for the style.
-            <br/>
+            <br />
             <a href="https://github.com/nfl/react-helmet">Helmet</a>
             {' '}is there to manage your head !
-            <br/>
+            <br />
             Try to make some changes and save to reload.
         </p>
         Redux demo:
