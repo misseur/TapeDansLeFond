@@ -1,0 +1,17 @@
+{
+  "name": "tdlf",
+  "version": "0.0.0",
+  "description": "Tape dans le fond",
+  "author": "Taskim <miksa_t@etna-alternance.net> (taskim.github.io)",
+  "keywords": [],
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "vitaminjs": "^1.0.0-rc6"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "test": "npm run lint",
+    "start": "vitaminjs start"
+  }
+}
