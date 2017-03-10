@@ -1,0 +1,1 @@
+Pour lancer le docker il suffit de faire "docker-compose up" dans le dossier config ou il y a le docker-compose.yml
