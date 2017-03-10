@@ -100,3 +100,28 @@
 2017-03-10 12:19:02,387 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2017-03-10 12:19:02,387 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2017-03-10 12:19:02,387 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-10 14:04:32,427 CRIT Supervisor running as root (no user in config file)
+2017-03-10 14:04:32,447 INFO RPC interface 'supervisor' initialized
+2017-03-10 14:04:32,448 CRIT Server 'inet_http_server' running without any HTTP authentication checking
+2017-03-10 14:04:32,453 INFO supervisord started with pid 1
+2017-03-10 14:04:33,461 INFO spawned: 'httpd' with pid 9
+2017-03-10 14:04:33,466 INFO spawned: 'sshd' with pid 10
+2017-03-10 14:04:33,470 INFO spawned: 'mysql' with pid 11
+2017-03-10 14:04:34,618 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-10 14:04:34,619 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-10 14:04:34,620 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-10 14:06:43,919 WARN received SIGTERM indicating exit request
+2017-03-10 14:06:43,920 INFO waiting for httpd, sshd, mysql to die
+2017-03-10 14:06:43,926 INFO stopped: mysql (exit status 0)
+2017-03-10 14:06:43,928 INFO stopped: sshd (exit status 255)
+2017-03-10 14:06:44,034 INFO stopped: httpd (exit status 0)
+2017-03-10 14:06:55,010 CRIT Supervisor running as root (no user in config file)
+2017-03-10 14:06:55,027 INFO RPC interface 'supervisor' initialized
+2017-03-10 14:06:55,028 CRIT Server 'inet_http_server' running without any HTTP authentication checking
+2017-03-10 14:06:55,032 INFO supervisord started with pid 1
+2017-03-10 14:06:56,035 INFO spawned: 'httpd' with pid 8
+2017-03-10 14:06:56,040 INFO spawned: 'sshd' with pid 9
+2017-03-10 14:06:56,044 INFO spawned: 'mysql' with pid 10
+2017-03-10 14:06:57,232 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-10 14:06:57,234 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-10 14:06:57,235 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
