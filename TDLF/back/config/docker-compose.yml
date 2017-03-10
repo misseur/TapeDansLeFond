@@ -1,10 +1,10 @@
 appli:
-  image: interieurmaker/appli:6
-  container_name: im_front
+  image: tdlf/back:latest
+  container_name: tdlf_back
   restart: always
   volumes:
-	- .:/var/www/html
-	- ../../sql:/var/lib/mysql
+    - ../appli:/var/www/html
+    - /ETNA/ETNA_Master1/GPE/sql:/var/lib/mysql
   ports:
-	- 9500:80
+    - 9500:80
   working_dir: /var/www/html
