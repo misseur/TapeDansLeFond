@@ -1,10 +1,11 @@
 appli:
-  image: tdlf/back:latest
+  image: tdlf/back:1.0
   container_name: tdlf_back
   restart: always
   volumes:
-    - ../appli:/var/www/html
-    - /ETNA/ETNA_Master1/GPE/sql:/var/lib/mysql
+    - /home/etna/Documents/etna/tdlf/TapeDansLeFond/TDLF/back/appli:/var/www/html
+    - /home/etna/Documents/etna/tdlf/sql:/var/lib/mysql
   ports:
     - 9500:80
+    - 222:22
   working_dir: /var/www/html
