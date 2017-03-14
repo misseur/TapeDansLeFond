@@ -1,13 +1,14 @@
 import { withStyles } from 'vitaminjs';
 import Helmet from 'vitaminjs/react-helmet';
-import s from './style.css'
-import Counter from './Counter';
-import logo from './logo.png';
+
+import s from '../style.css';
+import Counter from '../Counter';
+import logo from '../logo.png';
 
 const Index = () => (
     <div className={s.app}>
         <Helmet
-            title="VitaminJS"
+            title="Tape dans le fond"
             meta={[
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             ]}
@@ -15,7 +16,7 @@ const Index = () => (
         <div className={s.header}>
             <img src={logo} alt="logo" className={s.logo} />
         </div>
-        <p className={s.message}>
+        <div className={s.message}>
             Welcome !
             <br/>
             Here you can see an example using <a href="https://facebook.github.io/react/">React</a>
@@ -30,7 +31,7 @@ const Index = () => (
             {' '}is there to manage your head !
             <br/>
             Try to make some changes and save to reload.
-        </p>
+        </div>
         Redux demo:
         <div className={s.counter}>
             <Counter />

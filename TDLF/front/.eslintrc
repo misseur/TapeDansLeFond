@@ -1,5 +1,5 @@
 {
-    "extends": "./node_modules/vitaminjs/.eslintrc",
+    "extends": "./node_modules/vitaminjs/.eslintrc.json",
 
     "globals": {
         "fetch": false,
