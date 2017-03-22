@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/css?family=Raleway';
+@import 'https://fonts.googleapis.com/css?family=Raleway|Josefin+Sans:300';
 
 body {
 	height: 100%;
@@ -11,7 +11,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	font-family: 'Raleway';
+	font-family: 'Josefin Sans';
 }
 
 .header {

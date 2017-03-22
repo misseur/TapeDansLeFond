@@ -1,0 +1,30 @@
+.title {
+    font-family: 'Raleway';
+    font-size: 32px;
+}
+
+.container {
+    height: 200px;
+    max-width: 100%;
+    background-color: #01579B;
+    padding: 16px;
+}
+
+.block-container {
+    display: flex;
+}
+
+.block {
+    flex: 1 1 0;
+    font-size: 20px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.block-title {
+    font-family: 'Josefin Sans';
+    font-size: 28px;
+    margin-bottom: 8px;
+}
