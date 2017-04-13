@@ -1,0 +1,30 @@
+.menu {
+    /*background-color: rgba(0, 0, 0, 0.4);*/
+    list-style: none;
+    position: fixed;
+    left: 0;
+    top: calc(50% - 100px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 1000;
+    padding: 0;
+    height: 250px;
+    justify-content: center;
+    padding: 16px 0px;
+    border-radius: 3px;
+    /*width: 50px;*/
+}
+
+.title {
+    display: flex;
+}
+
+.separator {
+    border-bottom: 1px solid white;
+
+}
+
+.bar {
+    background-color: transparent;
+}

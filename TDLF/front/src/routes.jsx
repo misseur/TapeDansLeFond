@@ -9,6 +9,11 @@ if (IS_CLIENT) {
     } catch (e) {}
 }
 
+if (process.env.NODE_ENV !== 'production') {
+    (IS_CLIENT ? window : global).trace = (...logs) => x => console.log(...logs, x) || x;
+}
+
+
 export default (
     <Route path="/" component={App}>
         <IndexRedirect to="home" />

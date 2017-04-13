@@ -22,7 +22,7 @@ const HowItWorks = () =>
             <div className={s.block}>
                 <StarIcon color="white" style={{ width: 50, height: 50, marginTop: '-3px', marginBottom: 3 }} />
                 <div className={s['block-title']}>Atteins le haut du classement</div>
-                et remporte les meilleurs prix !
+                et remporte les meilleurs prix&nbsp;!
             </div>
         </div>
     </div>
