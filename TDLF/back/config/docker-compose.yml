@@ -1,5 +1,5 @@
 appli:
-  image: tdlf/back:1.0
+  image: tdlf/back:latest
   container_name: tdlf_back
   restart: always
   volumes:
