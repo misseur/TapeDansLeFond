@@ -2,6 +2,10 @@ FICHIER INFORMATIF POUR LES LANCEMENTS DES DOCKERS SUR LE BACKEND TDLF
 
 Pour lancer le docker il suffit de faire "docker-compose up" dans le dossier config ou il y a le docker-compose.yml
 
+Pour les accès aux différents Docker :
+    - http://localhost:9500 -> Docker Appli (API Silex)
+    - http://localhost:9501 -> PhpMyAdmin
+
 #----------------------------------------------------------------------------------------------------------------------------#
 |                                           A NE FAIRE QU'AU PREMIER LANCEMENT DES DOCKERS                                   |
 #----------------------------------------------------------------------------------------------------------------------------#
@@ -23,7 +27,6 @@ Pour lancer le docker il suffit de faire "docker-compose up" dans le dossier con
 |    - Vérifier que le sur le PhpMyAdmin vous pouvez vous connecter avec ces identifiants.                                   |
 |                                                                                                                            |
 #----------------------------------------------------------------------------------------------------------------------------#
-
 
 #----------------------------------------------------------------------------------------------------------------------------#
 |                                                   COMMANDES UTILES A CONNAITRE                                             |
