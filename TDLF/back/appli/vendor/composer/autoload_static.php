@@ -14,11 +14,13 @@ class ComposerStaticInit86ccc75aa2fb2006bde754faf1bc7eea
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Component\\Yaml\\' => 23,
             'Symfony\\Component\\Routing\\' => 26,
             'Symfony\\Component\\HttpKernel\\' => 29,
             'Symfony\\Component\\HttpFoundation\\' => 33,
             'Symfony\\Component\\EventDispatcher\\' => 34,
             'Symfony\\Component\\Debug\\' => 24,
+            'Symfony\\Component\\Console\\' => 26,
             'Silex\\' => 6,
         ),
         'P' => 
@@ -36,6 +38,10 @@ class ComposerStaticInit86ccc75aa2fb2006bde754faf1bc7eea
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Component\\Yaml\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
         'Symfony\\Component\\Routing\\' => 
         array (
@@ -56,6 +62,10 @@ class ComposerStaticInit86ccc75aa2fb2006bde754faf1bc7eea
         'Symfony\\Component\\Debug\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/debug',
+        ),
+        'Symfony\\Component\\Console\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/console',
         ),
         'Silex\\' => 
         array (
@@ -85,6 +95,10 @@ class ComposerStaticInit86ccc75aa2fb2006bde754faf1bc7eea
         ),
         'D' => 
         array (
+            'Doctrine\\ORM\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/orm/lib',
+            ),
             'Doctrine\\DBAL\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/dbal/lib',
@@ -108,12 +122,17 @@ class ComposerStaticInit86ccc75aa2fb2006bde754faf1bc7eea
         ),
     );
 
+    public static $fallbackDirsPsr0 = array (
+        0 => __DIR__ . '/../..' . '/src',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit86ccc75aa2fb2006bde754faf1bc7eea::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit86ccc75aa2fb2006bde754faf1bc7eea::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit86ccc75aa2fb2006bde754faf1bc7eea::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInit86ccc75aa2fb2006bde754faf1bc7eea::$fallbackDirsPsr0;
 
         }, null, ClassLoader::class);
     }

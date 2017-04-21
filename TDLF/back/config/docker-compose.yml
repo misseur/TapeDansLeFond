@@ -3,9 +3,28 @@ appli:
   container_name: tdlf_back
   restart: always
   volumes:
-    - /home/etna/Documents/etna/tdlf/TapeDansLeFond/TDLF/back/appli:/var/www/html
-    - /home/etna/Documents/etna/tdlf/sql:/var/lib/mysql
+    - ../appli:/var/www/html
   ports:
     - 9500:80
-    - 222:22
   working_dir: /var/www/html
+  links:
+    - "db"
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  container_name: tdlf_pma
+  restart: always
+  ports:
+    - 9501:80
+  environment:
+    - PMA_HOST=db
+  links:
+    - "db"
+db:
+  image: mysql
+  container_name: tdlf_sql
+  restart: always
+  environment:
+    MYSQL_ROOT_PASSWORD: 2d74VSGwvMtop4f
+  volumes:
+    - /ETNA/ETNA_Master1/GPE/sql:/var/lib/mysql
+    - ../config/my.cnf:/etc/my.cnf
