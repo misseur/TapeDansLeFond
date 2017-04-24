@@ -30,9 +30,12 @@ $app->get('/blog/{id}', function ($id) use ($entityManager) {
     return $user->getId();
 });
 
-$app->get("/login/{id}", function($id) use ($entityManager)) {
-    $entityManager->findAll();
-}
+$app->get("/login/{id}", function ($id) use ($entityManager) {
+    //Method find marche comme ceci (Nom de la classe que tu cherche, id)
+    $user = $entityManager->find("User", $id);
+    //$user est un Objet User du coup !
+    return $user->getName();
+});
 
 
 $app['debug'] = true;
