@@ -1,1 +1,37 @@
+FICHIER INFORMATIF POUR LES LANCEMENTS DES DOCKERS SUR LE BACKEND TDLF
+
 Pour lancer le docker il suffit de faire "docker-compose up" dans le dossier config ou il y a le docker-compose.yml
+
+Pour les accès aux différents Docker :
+    - http://localhost:9500 -> Docker Appli (API Silex)
+    - http://localhost:9501 -> PhpMyAdmin
+
+#----------------------------------------------------------------------------------------------------------------------------#
+|                                           A NE FAIRE QU'AU PREMIER LANCEMENT DES DOCKERS                                   |
+#----------------------------------------------------------------------------------------------------------------------------#
+|                                                                                                                            |
+|    - Verifier pour les volumes dans le fichier docker-compose que cela soit cohérent avec votre système :                  |
+|        - Docker tdlf_back                                                                                                  |
+|           - Le chemin doit pointer vers le dossier back/appli sur votre Ordinateur                                         |
+|        - Docker tdlf_sql                                                                                                   |
+|            - Le chemin doit pointer vers un dossier en dehors du github qui doit contenir votre BDD (toujours utiliser le  |
+|             meme)                                                                                                          |
+|            - Le my.cnf est dans le dossier config du back, reliez le.                                                      |
+|    - Lancer les dockers avec la commande : 'docker-compose up'                                                             |
+|    - Se connecter en bash sur le docker back : 'docker exec -it tdlf_back bash'                                            |
+|    - Se connecter sur la base MySQL avec les accès par défaut : 'mysql -hdb -uroot -p2d74VSGwvMtop4f'                      |
+|    - Créer l'utilisateur bx avec le mot de passe toto accessible depuis n'importe ou :                                     |
+|        1) 'CREATE USER 'bx'@'%' IDENTIFIED BY 'toto';'                                                                     |
+|        2) 'GRANT ALL PRIVILEGES ON * . * TO 'bx'@'%';'                                                                     |
+|        3) 'FLUSH PRIVILEGES;'                                                                                              |
+|    - Vérifier que le sur le PhpMyAdmin vous pouvez vous connecter avec ces identifiants.                                   |
+|                                                                                                                            |
+#----------------------------------------------------------------------------------------------------------------------------#
+
+#----------------------------------------------------------------------------------------------------------------------------#
+|                                                   COMMANDES UTILES A CONNAITRE                                             |
+#----------------------------------------------------------------------------------------------------------------------------#
+|                                                                                                                            |
+|    - Pour se connecter en bash sur un Docker (back ou mysql) 'docker exec -it [docker_name] bash'                          |
+|                                                                                                                            |
+#----------------------------------------------------------------------------------------------------------------------------#
