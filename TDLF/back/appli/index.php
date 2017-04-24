@@ -6,6 +6,7 @@ require_once __DIR__.'/vendor/autoload.php';
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 require_once 'src/User.php';
+require_once 'routes/routes.php';
 
 $isDevMode = false;
 
@@ -21,7 +22,7 @@ $conn = array(
 $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src"), $isDevMode);
 $entityManager = EntityManager::create($conn, $config);
 
-
+/*
 $app->get('/blog/{id}', function ($id) use ($entityManager) {
     $user = new User();
     $user->setName($id);
@@ -37,6 +38,9 @@ $app->get("/login/{id}", function ($id) use ($entityManager) {
     return $user->getName();
 });
 
+*/
+
+setRoute($app, $entityManager);
 
 $app['debug'] = true;
 
