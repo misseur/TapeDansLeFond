@@ -2,9 +2,12 @@
 error_reporting(-1);
 ini_set('display_errors', 'On');
 require_once __DIR__.'/vendor/autoload.php';
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+
+
 require_once 'src/User.php';
 require_once 'routes/routes.php';
 
@@ -22,25 +25,7 @@ $conn = array(
 $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src"), $isDevMode);
 $entityManager = EntityManager::create($conn, $config);
 
-/*
-$app->get('/blog/{id}', function ($id) use ($entityManager) {
-    $user = new User();
-    $user->setName($id);
-    $entityManager->persist($user);
-    $entityManager->flush();
-    return $user->getId();
-});
-
-$app->get("/login/{id}", function ($id) use ($entityManager) {
-    //Method find marche comme ceci (Nom de la classe que tu cherche, id)
-    $user = $entityManager->find("User", $id);
-    //$user est un Objet User du coup !
-    return $user->getName();
-});
-
-*/
-
-setRoute($app, $entityManager);
+setFrontRoutes($app, $entityManager);
 
 $app['debug'] = true;
 
