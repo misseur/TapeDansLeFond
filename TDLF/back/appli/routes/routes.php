@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
 
 require_once 'createUser.php';
 require_once 'getUser.php';
