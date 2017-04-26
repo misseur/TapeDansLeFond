@@ -1,11 +1,18 @@
 <?php
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 function registerUser($request, $entityManager)
 {
+    $uuid = $request->get('uuid');
+    $name = $request->get('name');
+    
+    $user = $entityManager->find("User", $uuid);
+    
+    if ($user != null)
+        throw new NotFoundHttpException(sprintf('uuid %s already exist', $uuid));
+    
     $user = new User();
-    $user->setId($request->get('email'));
-    //var_dump($request->get('email'));
-    $user->setName($request->get('name'));
+    $user->setUUId($uuid);
+    $user->setName($request->get($name));
     $entityManager->persist($user);
     $entityManager->flush();
     

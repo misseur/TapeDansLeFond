@@ -25,6 +25,12 @@ class User
      */
     private $name;
 
+
+    /**
+     * @uuid @Column(type="string")
+     */
+     private $uuid;
+
     /**
      * @return int
      */
@@ -32,6 +38,15 @@ class User
     {
         return $this->id;
     }
+    
+    /**
+     * @return string
+     */
+     
+     public function getUUID()
+     {
+         return $this->uuid;
+     }
 
     /**
      * @param int $id
@@ -43,6 +58,17 @@ class User
         $this->id = $id;
         return $this;
     }
+    
+    /**
+     * @paramint $uuid;
+     * 
+     * @return User
+     */
+     public function setUUID($uuid)
+     {
+         $this->uuid = $uuid;
+         return $this;
+     }
 
     /**
      * @return string

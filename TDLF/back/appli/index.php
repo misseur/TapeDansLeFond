@@ -2,8 +2,11 @@
 error_reporting(-1);
 ini_set('display_errors', 'On');
 require_once __DIR__.'/vendor/autoload.php';
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
@@ -24,6 +27,14 @@ $conn = array(
 );
 $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src"), $isDevMode);
 $entityManager = EntityManager::create($conn, $config);
+
+
+$app->before(function(Request $request) {
+    if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace(is_array($data) ? $data : array());
+    }
+});
 
 setFrontRoutes($app, $entityManager);
 
