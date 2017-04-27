@@ -43,13 +43,7 @@ class UserController implements ControllerProviderInterface
 
     public function getUser(Application $app, Request $req, $id)
     {
-        try {
-        $app['entityManager'];
         $user = $app['entityManager']->find("TDLF\Entity\User", $id);
-            
-        } catch (\Exception $e) {
-            echo $e->getMessage(); die();
-        }
         //Method find marche comme ceci (Nom de la classe que tu cherche, id)
         //$user est un Objet User du coup !
         return $user->getName();
@@ -60,7 +54,7 @@ class UserController implements ControllerProviderInterface
         $uuid = $request->get('uuid');
         $name = $request->get('name');
         
-        $user = $app['entityManager']->find("User", $uuid);
+        $user = $app['entityManager']->find("TDLF\Entity\User", $uuid);
         
         if ($user != null) {
             throw new NotFoundHttpException(sprintf('uuid %s already exist', $uuid));
