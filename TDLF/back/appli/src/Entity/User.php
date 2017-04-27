@@ -6,6 +6,8 @@
  * Time: 12:50
  */
 
+namespace TDLF\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 
