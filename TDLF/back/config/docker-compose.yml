@@ -3,7 +3,7 @@ appli:
   container_name: tdlf_back
   restart: always
   volumes:
-    - /home/etna/Documents/etna/tdlf/TapeDansLeFond/TDLF/back/appli:/var/www/html
+    - /Users/al1/gpe/TapeDansLeFond/TDLF/back/appli:/var/www/html
   ports:
     - 9500:80
   working_dir: /var/www/html
@@ -26,5 +26,5 @@ db:
   environment:
     MYSQL_ROOT_PASSWORD: 2d74VSGwvMtop4f
   volumes:
-    - /home/etna/Documents/etna/tdlf/sql:/var/lib/mysql
-    - /home/etna/Documents/etna/tdlf/TapeDansLeFond/TDLF/back/config/my.cnf:/etc/my.cnf
+    - /Users/al1/gpe/sql:/var/lib/mysql
+    - /Users/al1/gpe/TapeDansLeFond/TDLF/back/config/my.cnf:/etc/my.cnf
