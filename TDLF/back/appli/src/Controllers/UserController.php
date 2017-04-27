@@ -16,12 +16,20 @@ class UserController implements ControllerProviderInterface
     {
         $controllers = $app['controllers_factory'];
 
+        $controllers->get('/hello', [$this, 'hello'])
+                    ->before($app['Hello']('World!'));
+
         $controllers->get('/blog/{id}', [$this, 'createUser']);
         $controllers->get('/login/{id}', [$this, 'getUser']);
 
         $controllers->post('/register_user', [$this, 'registerUser']);
 
         return $controllers;
+    }
+
+    public function hello()
+    {
+        return '';
     }
 
     public function createUser(Application $app, Request $req, $id)

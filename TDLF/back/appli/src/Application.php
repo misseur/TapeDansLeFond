@@ -70,7 +70,6 @@ class Application extends Silex\Application
         foreach (glob(__DIR__ . '/Middleware/*.php') as $middleware) {
             $middleware = pathinfo($middleware)['filename'];
             $className = "\\TDLF\\Middleware\\{$middleware}";
-
             if (class_exists($className)
                     && in_array('Pimple\ServiceProviderInterface', class_implements($className))) {
                 $this->register(new $className());
