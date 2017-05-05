@@ -2,6 +2,7 @@ import { Route, IndexRedirect } from 'vitaminjs/react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './App';
 import Landing from './Landing';
+import LoginPopup from './LoginPopup';
 
 if (IS_CLIENT) {
     try {
@@ -18,5 +19,6 @@ export default (
     <Route path="/" component={App}>
         <IndexRedirect to="home" />
         <Route path="home" component={Landing} />
+        <Route path="login" component={LoginPopup} />
     </Route>
 );
