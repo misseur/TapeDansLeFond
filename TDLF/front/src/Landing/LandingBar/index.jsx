@@ -9,35 +9,35 @@ import SeatIcon from 'material-ui/svg-icons/action/event-seat';
 import EqualizerIcon from 'material-ui/svg-icons/av/equalizer';
 import { Motion, spring } from 'react-motion';
 
-import LoginPopup from '../../LoginPopup';
+import SignupPopup from '../../Signup';
 
 import s from './style.css';
 
-const menuItems = handleDisplayLoginModal => [
+const menuItems = handleDisplaySignupModal => [
     {
         title: 'Connexion',
         Icon: AccountIcon,
-        link: handleDisplayLoginModal,
+        link: handleDisplaySignupModal,
     },
     {
         title: 'Inscription',
         Icon: SeatIcon,
-        link: handleDisplayLoginModal,
+        link: handleDisplaySignupModal,
     },
     {
         title: 'Comment ça marche',
         Icon: BulbIcon,
-        link: handleDisplayLoginModal,
+        link: handleDisplaySignupModal,
     },
     {
         title: 'Qui sommes-nous ?',
         Icon: FaceIcon,
-        link: handleDisplayLoginModal,
+        link: handleDisplaySignupModal,
     },
     {
         title: 'En chiffres',
         Icon: EqualizerIcon,
-        link: handleDisplayLoginModal,
+        link: handleDisplaySignupModal,
     },
 ];
 
@@ -46,7 +46,7 @@ class LandingBar extends Component {
         super(props);
         this.state = {
             focused: null,
-            showLoginModal: false,
+            showSignupModal: false,
         };
     }
     setFocused(i) {
@@ -55,21 +55,21 @@ class LandingBar extends Component {
     removeFocused() {
         this.setState(() => ({ focused: null }));
     }
-    handleDisplayLoginModal() {
+    handleDisplaySignupModal() {
         document.body.style.overflow = 'hidden';
-        this.setState({ showLoginModal: true });
+        this.setState({ showSignupModal: true });
     }
 
-    handleCloseLoginModal() {
+    handleCloseSignupModal() {
         document.body.style.overflow = 'initial';
-        this.setState({ showLoginModal: false });
+        this.setState({ showSignupModal: false });
     }
 
     render() {
         const { focused } = this.state;
         return (
             <ul className={s.menu}>
-                {menuItems(this.handleDisplayLoginModal).map((item, i) =>
+                {menuItems(this.handleDisplaySignupModal).map((item, i) =>
                     <Motion
                         key={item.title}
                         style={{
@@ -135,7 +135,7 @@ class LandingBar extends Component {
                         }
                     </Motion>,
                 )}
-                {this.state.showLoginModal && <LoginPopup onClose={this.handleCloseLoginModal} />}
+                {this.state.showSignupModal && <SignupPopup onClose={this.handleCloseSignupModal} />}
             </ul>
         );
     }

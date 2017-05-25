@@ -3,7 +3,7 @@ import Helmet from 'vitaminjs/react-helmet';
 import { PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { white, lightBlue50 } from 'material-ui/styles/colors';
+import { white, lightBlue50, lightBlue300 } from 'material-ui/styles/colors';
 
 import s from '../style.css';
 
@@ -15,6 +15,7 @@ const muiTheme = getMuiTheme({
     palette: {
         textColor: white,
         primary1Color: white,
+        primary2Color: lightBlue300,
         borderColor: white,
         disabledColor: lightBlue50,
     },
@@ -23,6 +24,7 @@ const muiTheme = getMuiTheme({
     appBar: {
         height: 50,
     },
+    userAgent: 'all',
 });
 
 const App = ({ children }) => (
