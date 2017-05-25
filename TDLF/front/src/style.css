@@ -22,3 +22,12 @@ body {
 :global a:hover {
     opacity: 0.8;
 }
+
+:global input,
+:global input:-webkit-autofill,
+:global textarea:-webkit-autofill,
+:global select:-webkit-autofill {
+    background-color: rgb(79, 195, 247) !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgb(79, 195, 247) inset;
+    color: white !important;
+}
