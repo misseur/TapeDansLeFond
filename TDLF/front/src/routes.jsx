@@ -6,6 +6,7 @@ import App from './App';
 import Landing from './Landing';
 import sagaMiddleware from './middlewares/saga';
 import IndexSagas from './sagas';
+import Dashboard from './Dashboard';
 
 if (IS_CLIENT) {
     try {
@@ -37,6 +38,7 @@ export default async (store) => {
         <Route path="/" component={App}>
             <IndexRedirect to="home" />
             <Route path="home" component={Landing} />
+            <Route path="dashboard" component={Dashboard} />
         </Route>
     );
 };

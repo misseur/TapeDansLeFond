@@ -19,7 +19,7 @@ const muiTheme = getMuiTheme({
         borderColor: white,
         disabledColor: lightBlue50,
     },
-    fontFamily: 'Josefin Sans',
+    fontFamily: 'Nunito Sans',
     borderColor: white,
     appBar: {
         height: 50,

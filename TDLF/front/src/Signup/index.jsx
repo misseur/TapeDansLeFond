@@ -4,7 +4,6 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'vitaminjs/react-redux';
 import { compose } from 'ramda';
 import { RaisedButton } from 'material-ui';
-import { Link } from 'vitaminjs/react-router';
 import autobind from 'autobind-decorator';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
@@ -28,6 +27,7 @@ class Signup extends Component {
             palette: PropTypes.shape({ primary2Color: PropTypes.string.isRequired }),
         }),
         onClose: PropTypes.func.isRequired,
+        goToLogin: PropTypes.func.isRequired,
     };
 
     submit(values) {
@@ -45,9 +45,11 @@ class Signup extends Component {
             },
             muiTheme: { palette: { primary2Color } },
             onClose,
+            goToLogin,
         } = this.props;
         return (
             <Popup onClose={onClose}>
+                <h1>Inscription</h1>
                 <form
                     className="widget-form"
                     style={{
@@ -88,11 +90,16 @@ class Signup extends Component {
                     )}
                     {!requesting && successful && (
                         <div>
-                            Signup Successful! <Link to="/login">» Se connecter »</Link>
+                            Signup Successful!
+                            <div onClick={goToLogin} style={{ cursor: 'pointer' }}>
+                                » Se connecter »
+                            </div>
                         </div>
                     )}
                     {!requesting && !successful && (
-                        <Link to="/login">Déjà membre ? » Se connecter »</Link>
+                        <div onClick={goToLogin} style={{ cursor: 'pointer' }}>
+                            Déjà membre ? » Se connecter »
+                        </div>
                     )}
                 </div>
             </Popup>
@@ -107,6 +114,6 @@ const mapStateToProps = state => ({
 export default compose(
     connect(mapStateToProps, { signupRequest }),
     reduxForm({ form: 'signup' }),
-    autobind,
     muiThemeable(),
+    autobind,
 )(Signup);
