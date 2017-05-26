@@ -33,5 +33,7 @@ Pour les accès aux différents Docker :
 #----------------------------------------------------------------------------------------------------------------------------#
 |                                                                                                                            |
 |    - Pour se connecter en bash sur un Docker (back ou mysql) 'docker exec -it [docker_name] bash'                          |
-|                                                                                                                            |
+|    - Une fois les modifications faites sur les entités, il suffit de lancer la commande :                                  |
+|                                    vendor/bin/doctrine orm:schema-tool:update --force'                                     |
+|      Pour que les modifications soient enregistrées dans la base de données.                                               |
 #----------------------------------------------------------------------------------------------------------------------------#
