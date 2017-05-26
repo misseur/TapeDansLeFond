@@ -32,6 +32,18 @@ class User
      * @uuid @Column(type="string")
      */
      private $uuid;
+     
+     /**
+      * @email @Column(type="string")
+      */
+      
+    private $email;
+      
+      /**
+       * @sha512pass @Column(type="string")
+       */
+       
+    private $sha512pass;
 
     /**
      * @return int
@@ -111,7 +123,7 @@ class User
      }
      
      /**
-      * @parap string $pass
+      * @param string $pass
       * 
       * @return User
       */
