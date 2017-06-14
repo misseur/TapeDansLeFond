@@ -83,6 +83,12 @@ class UserController implements ControllerProviderInterface
         $app['entityManager']->persist($user);
         $app['entityManager']->flush();
         
-        return $user->getId();
+        $response = new Response();
+        
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        
+        return $response;
     }
 }
