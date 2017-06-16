@@ -51,19 +51,21 @@ class UserController implements ControllerProviderInterface
         $user = $app['entityManager']->find("TDLF\Entity\User", $id);
         //Method find marche comme ceci (Nom de la classe que tu cherche, id)
         //$user est un Objet User du coup !
-        return $user->getName();
+        return $user;
     }
     
     public function loginUser(Application $app, Request $req)
     {
         $email = $req->get('email');
         $pass = $req->get('shapass');
-        $user = $app['entityManager']->find("TDLF\Entity\User", $email);
-        if ($user == null || $user->getPass() != $pass)
+        $user = $app['entityManager']->createQuery('select u.id from TDLF\Entity\User u where u.email =\''.$email.'\'')->getSingleResult();
+        $user = $this->getUser($app, $req, $user['id']);
+        if ($user === null)
             return $app->json('Bad Request', 400);
-        else {
+        elseif ($user->getPass() != $pass)
+            return $app->json('Bad Request', 400);
+        else
             return $app->json('Valid Connection', 200);
-        }
     }
 
     public function registerUser(Application $app, Request $req)
