@@ -27,6 +27,8 @@ class UserController implements ControllerProviderInterface
         $controllers->post('/register_user', [$this, 'registerUser']);
         $controllers->post('/login_user', [$this, 'loginUser']);
 
+        $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
+
         return $controllers;
     }
 
@@ -63,12 +65,15 @@ class UserController implements ControllerProviderInterface
 
     public function registerUser(Application $app, Request $req)
     {
-        $uuid = $req->get('uuid');
-        $name = $req->get('name');
-        $email = $req->get('email');
-        $shapass = $req->get('shapass');
+        $uuid = $req->get('uuid', null);
+        $name = $req->get('name', null);
+        $email = $req->get('email', null);
+        $shapass = $req->get('shapass', null);
         
-        
+        if ($uuid === null || $name === null || $email === null || $shapass === null) {
+            return $app->abort(400, 'Bad request');
+        }
+
         $user = $app['entityManager']->find("TDLF\Entity\User", $email);
         
         if ($user != null) {

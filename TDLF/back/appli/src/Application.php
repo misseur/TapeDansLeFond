@@ -6,6 +6,7 @@ use Silex;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use JDesrosiers\Silex\Provider\CorsServiceProvider;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
@@ -27,9 +28,19 @@ class Application extends Silex\Application
             ->register(new Silex\Provider\ServiceControllerServiceProvider())
             ->register(new Silex\Provider\HttpFragmentServiceProvider())
             ->registerMiddleware()
+            ->registerCors()
             ->registerRoutes()
             ->registerEvent()
             ->registerDb($isDevMode);
+    }
+
+    protected function registerCors()
+    {
+        $this->register(new CorsServiceProvider(), [
+            "cors.allowOrigin" => "*"
+        ]);
+
+        return $this;
     }
 
     protected function registerRoutes()
