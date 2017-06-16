@@ -6,6 +6,8 @@ use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use TDLF\Entity;
 
@@ -23,6 +25,9 @@ class UserController implements ControllerProviderInterface
         $controllers->get('/login/{id}', [$this, 'getUser']);
 
         $controllers->post('/register_user', [$this, 'registerUser']);
+        $controllers->post('/login_user', [$this, 'loginUser']);
+
+        $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
 
         return $controllers;
     }
@@ -48,13 +53,28 @@ class UserController implements ControllerProviderInterface
         //$user est un Objet User du coup !
         return $user->getName();
     }
+    
+    public function loginUser(Application $app, Request $req)
+    {
+        $email = $req->get('email');
+        $user = $app['entityManager']->find("TDLF\Entity\User", $email);
+        if ($user == null)
+        {
+        }
+    }
 
     public function registerUser(Application $app, Request $req)
     {
-        $uuid = $request->get('uuid');
-        $name = $request->get('name');
+        $uuid = $req->get('uuid', null);
+        $name = $req->get('name', null);
+        $email = $req->get('email', null);
+        $shapass = $req->get('shapass', null);
         
-        $user = $app['entityManager']->find("TDLF\Entity\User", $uuid);
+        if ($uuid === null || $name === null || $email === null || $shapass === null) {
+            return $app->abort(400, 'Bad request');
+        }
+
+        $user = $app['entityManager']->find("TDLF\Entity\User", $email);
         
         if ($user != null) {
             throw new NotFoundHttpException(sprintf('uuid %s already exist', $uuid));
@@ -62,7 +82,9 @@ class UserController implements ControllerProviderInterface
         
         $user = new Entity\User();
         $user->setUUId($uuid);
-        $user->setName($request->get($name));
+        $user->setName($name);
+        $user->setEmail($email);
+        $user->setPass($shapass);
         $app['entityManager']->persist($user);
         $app['entityManager']->flush();
         

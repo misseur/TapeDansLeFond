@@ -12,7 +12,7 @@ function checkAuthorization(dispatch) {
         const expiry = created + ttl;
 
         // if the token has expired return false
-        console.log('TEST', created>expiry);
+        console.log('TEST', created > expiry);
         if (created > expiry) return false;
 
         // otherwise, dispatch the token to our setClient action

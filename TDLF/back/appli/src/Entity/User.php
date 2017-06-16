@@ -32,6 +32,18 @@ class User
      * @uuid @Column(type="string")
      */
      private $uuid;
+     
+     /**
+      * @email @Column(type="string")
+      */
+      
+    private $email;
+      
+      /**
+       * @sha512pass @Column(type="string")
+       */
+       
+    private $sha512pass;
 
     /**
      * @return int
@@ -62,7 +74,7 @@ class User
     }
     
     /**
-     * @paramint $uuid;
+     * @param string $uuid;
      * 
      * @return User
      */
@@ -79,6 +91,14 @@ class User
     {
         return $this->name;
     }
+    
+    /**
+     * @return string
+     */
+     public function getEmail()
+     {
+         return $this->email;
+     }
 
     /**
      * @param string $name
@@ -90,4 +110,34 @@ class User
         $this->name = $name;
         return $this;
     }
+    
+    /**
+     * @param string $email
+     * 
+     * @return User
+     */
+     public function setEmail($email)
+     {
+         $this->email = $email;
+         return $this;
+     }
+     
+     /**
+      * @param string $pass
+      * 
+      * @return User
+      */
+      public function setPass($sha512pass)
+      {
+          $this->sha512pass = $sha512pass;
+          return $this;
+      }
+      
+      /**
+       * @return string
+       */
+       public function getPass()
+       {
+           return $this->sha512pass;
+       }
 }

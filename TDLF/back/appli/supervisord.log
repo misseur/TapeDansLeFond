@@ -53,3 +53,13 @@
 2017-04-27 13:51:39,053 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2017-04-27 13:51:39,054 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2017-04-27 13:51:39,055 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-16 08:23:57,133 CRIT Supervisor running as root (no user in config file)
+2017-06-16 08:23:57,239 INFO RPC interface 'supervisor' initialized
+2017-06-16 08:23:57,242 CRIT Server 'inet_http_server' running without any HTTP authentication checking
+2017-06-16 08:23:57,247 INFO supervisord started with pid 1
+2017-06-16 08:23:58,254 INFO spawned: 'httpd' with pid 7
+2017-06-16 08:23:58,264 INFO spawned: 'sshd' with pid 8
+2017-06-16 08:23:58,278 INFO spawned: 'mysql' with pid 9
+2017-06-16 08:23:59,791 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-16 08:23:59,792 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-16 08:23:59,793 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
