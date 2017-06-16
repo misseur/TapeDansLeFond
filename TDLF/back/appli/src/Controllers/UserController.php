@@ -88,6 +88,7 @@ class UserController implements ControllerProviderInterface
         $app['entityManager']->persist($user);
         $app['entityManager']->flush();
         
-        return $user->getId();
+        // return $user->getId();
+        return $app->json($user->getId(), 200);
     }
 }
