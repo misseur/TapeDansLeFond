@@ -57,9 +57,12 @@ class UserController implements ControllerProviderInterface
     public function loginUser(Application $app, Request $req)
     {
         $email = $req->get('email');
+        $pass = $req->get('shapass');
         $user = $app['entityManager']->find("TDLF\Entity\User", $email);
-        if ($user == null)
-        {
+        if ($user == null || $user->getPass() != $pass)
+            return $app->json('Bad Request', 400);
+        else {
+            return $app->json('Valid Connection', 200);
         }
     }
 
