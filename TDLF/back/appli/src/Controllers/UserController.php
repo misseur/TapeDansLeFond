@@ -68,12 +68,11 @@ class UserController implements ControllerProviderInterface
 
     public function registerUser(Application $app, Request $req)
     {
-        $uuid = $req->get('uuid', null);
         $name = $req->get('name', null);
         $email = $req->get('email', null);
         $shapass = $req->get('shapass', null);
         
-        if ($uuid === null || $name === null || $email === null || $shapass === null) {
+        if ($name === null || $email === null || $shapass === null) {
             return $app->abort(400, 'Bad request');
         }
 
@@ -84,7 +83,6 @@ class UserController implements ControllerProviderInterface
         }
         
         $user = new Entity\User();
-        $user->setUUId($uuid);
         $user->setName($name);
         $user->setEmail($email);
         $user->setPass($shapass);
