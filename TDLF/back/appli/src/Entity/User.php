@@ -27,18 +27,24 @@ class User
      */
     private $name;
 
-     
-     /**
-      * @email @Column(type="string")
-      */
-      
+
+    /**
+     * @email @Column(type="string")
+     */
+
     private $email;
-      
-      /**
-       * @sha512pass @Column(type="string")
-       */
-       
+
+    /**
+     * @sha512pass @Column(type="string")
+     */
+
     private $sha512pass;
+
+    /**
+     * @token @Column(type="string")
+     */
+
+    private $token;
 
     /**
      * @return int
@@ -66,14 +72,14 @@ class User
     {
         return $this->name;
     }
-    
+
     /**
      * @return string
      */
-     public function getEmail()
-     {
-         return $this->email;
-     }
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
     /**
      * @param string $name
@@ -85,34 +91,52 @@ class User
         $this->name = $name;
         return $this;
     }
-    
+
     /**
      * @param string $email
-     * 
+     *
      * @return User
      */
-     public function setEmail($email)
-     {
-         $this->email = $email;
-         return $this;
-     }
-     
-     /**
-      * @param string $pass
-      * 
-      * @return User
-      */
-      public function setPass($sha512pass)
-      {
-          $this->sha512pass = $sha512pass;
-          return $this;
-      }
-      
-      /**
-       * @return string
-       */
-       public function getPass()
-       {
-           return $this->sha512pass;
-       }
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @param string $pass
+     *
+     * @return User
+     */
+    public function setPass($sha512pass)
+    {
+        $this->sha512pass = $sha512pass;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPass()
+    {
+        return $this->sha512pass;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+
 }

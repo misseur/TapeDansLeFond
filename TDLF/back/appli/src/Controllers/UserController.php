@@ -13,7 +13,6 @@ use TDLF\Entity;
 
 class UserController implements ControllerProviderInterface
 {
-
     public function connect(Application $app)
     {
         $controllers = $app['controllers_factory'];
@@ -26,6 +25,7 @@ class UserController implements ControllerProviderInterface
 
         $controllers->post('/register_user', [$this, 'registerUser']);
         $controllers->post('/login_user', [$this, 'loginUser']);
+        $controllers->post('/logout', [$this, 'logoutUser']);
 
         $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
 
@@ -46,7 +46,7 @@ class UserController implements ControllerProviderInterface
         return $user->getId();
     }
 
-    public function getUser(Application $app, Request $req, $id)
+    public function getUser(Application $app, $id)
     {
         $user = $app['entityManager']->find("TDLF\Entity\User", $id);
         //Method find marche comme ceci (Nom de la classe que tu cherche, id)
@@ -58,14 +58,46 @@ class UserController implements ControllerProviderInterface
     {
         $email = $req->get('email');
         $pass = $req->get('shapass');
-        $user = $app['entityManager']->createQuery('select u.id from TDLF\Entity\User u where u.email =\''.$email.'\'')->getSingleResult();
-        $user = $this->getUser($app, $req, $user['id']);
-        if ($user === null)
-            return $app->json('Bad Request', 400);
-        elseif ($user->getPass() != $pass)
-            return $app->json('Bad Request', 400);
-        else
-            return $app->json('Valid Connection', 200);
+        try {
+            $user = $app['User']->getUserByEmail($email);
+        } catch (\Exception $exception) {
+            return $app->json('User not found', 400);
+        }
+        if ($user->getPass() != $pass)
+            return $app->json('Bad Password', 400);
+        else {
+            return $app->json($this->goodCredentials($app, $user), 200);
+        }
+    }
+
+    public function logoutUser(Application $app, Request $req) {
+        $id = $req->get('id');
+        $user = $this->getUser($app, $id);
+        if ($user->getToken() == "")
+            return $app->json("Logout impossible", 400);
+        else {
+            $user->setToken("");
+            $app['entityManager']->persist($user);
+            $app['entityManager']->flush();
+            return $app->json("",200);
+        }
+    }
+
+    public function goodCredentials(Application $app, Entity\User $user) {
+        $token = $user->getEmail();
+        $date = new \DateTime();
+        $date = $date->format('Y-m-d H-m-s');
+        $token = $token.$date;
+        for ($i = 0; $i < 10; $i++) {
+            $token = hash('sha256', $token);
+        }
+        $user->setToken($token);
+        $app['entityManager']->persist($user);
+        $app['entityManager']->flush();
+        return array(
+            'token' => $token,
+            'expire' => $date,
+            'id' => $user->getId());
     }
 
     public function registerUser(Application $app, Request $req)
@@ -75,23 +107,14 @@ class UserController implements ControllerProviderInterface
         $shapass = $req->get('shapass', null);
         
         if ($name === null || $email === null || $shapass === null) {
-            return $app->abort(400, 'Bad request');
+            return $app->abort(400, 'Paramètre manquant');
         }
-
-        $user = $app['entityManager']->find("TDLF\Entity\User", $email);
-        
-        if ($user != null) {
-            throw new NotFoundHttpException(sprintf('uuid %s already exist', $uuid));
-        }
-        
         $user = new Entity\User();
         $user->setName($name);
         $user->setEmail($email);
         $user->setPass($shapass);
         $app['entityManager']->persist($user);
         $app['entityManager']->flush();
-        
-        // return $user->getId();
         return $app->json($user->getId(), 200);
     }
 }

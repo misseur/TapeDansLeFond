@@ -31,7 +31,9 @@ class Application extends Silex\Application
             ->registerCors()
             ->registerRoutes()
             ->registerEvent()
-            ->registerDb($isDevMode);
+            ->registerDb($isDevMode)
+            ->registerRepository()
+        ;
     }
 
     protected function registerCors()
@@ -62,6 +64,31 @@ class Application extends Silex\Application
 
         return $this;
     }
+
+    protected function registerRepository()
+    {
+        // Recherche tous les controllers pour les loader dans $this
+        foreach (glob(__DIR__ . '/Repository/*.php') as $repository) {
+            $repositoryName = pathinfo($repository)['filename'];
+            $className = "\\TDLF\\Repository\\{$repositoryName}";
+
+            // Si la class existe et qu'elle herite bien de l'interface d'un controlleur, on l'ajoute
+            if (class_exists($className)
+                && in_array('Doctrine\Common\Persistence\ObjectRepository', class_implements($className))) {
+                $app = $this;
+                $entityName = str_replace('Repository', '', $repositoryName);
+                $entityClassName = "TDLF\\Entity\\{$entityName}";
+                $this[$entityName] = function () use ($className, $app, $entityClassName) {
+                    return new $className($app['entityManager'], $app['entityManager']->getClassMetadata($entityClassName));
+                };
+
+
+            }
+        }
+
+        return $this;
+    }
+
 
     protected function registerEvent()
     {
@@ -105,8 +132,17 @@ class Application extends Silex\Application
             $isDevMode
         );
 
-        $this['entityManager'] = function ($app) use ($connection, $config) {
-            return EntityManager::create($connection, $config);
+        $app = $this;
+
+        $this['meta'] = function () use ($isDevMode) {
+            return Setup::createAnnotationMetadataConfiguration(
+                [ __DIR__ . "/Entity" ],
+                $isDevMode
+            );
+        };
+
+        $this['entityManager'] = function ($app) use ($connection, $app) {
+            return EntityManager::create($connection, $app['meta']);
         };
 
         return $this;

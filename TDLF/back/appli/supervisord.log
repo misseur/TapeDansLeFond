@@ -63,3 +63,63 @@
 2017-06-16 08:23:59,791 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2017-06-16 08:23:59,792 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2017-06-16 08:23:59,793 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-20 13:31:27,698 CRIT Supervisor running as root (no user in config file)
+2017-06-20 13:31:27,742 INFO RPC interface 'supervisor' initialized
+2017-06-20 13:31:27,743 CRIT Server 'inet_http_server' running without any HTTP authentication checking
+2017-06-20 13:31:27,747 INFO supervisord started with pid 1
+2017-06-20 13:31:28,752 INFO spawned: 'httpd' with pid 8
+2017-06-20 13:31:28,762 INFO spawned: 'sshd' with pid 9
+2017-06-20 13:31:28,770 INFO spawned: 'mysql' with pid 10
+2017-06-20 13:31:30,382 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-20 13:31:30,383 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-20 13:31:30,384 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-20 13:37:09,523 WARN received SIGTERM indicating exit request
+2017-06-20 13:37:09,525 INFO waiting for httpd, sshd, mysql to die
+2017-06-20 13:37:09,528 INFO stopped: mysql (exit status 0)
+2017-06-20 13:37:09,531 INFO stopped: sshd (exit status 255)
+2017-06-20 13:37:09,647 INFO stopped: httpd (exit status 0)
+2017-06-26 09:11:23,001 CRIT Supervisor running as root (no user in config file)
+2017-06-26 09:11:23,052 INFO RPC interface 'supervisor' initialized
+2017-06-26 09:11:23,053 CRIT Server 'inet_http_server' running without any HTTP authentication checking
+2017-06-26 09:11:23,057 INFO supervisord started with pid 1
+2017-06-26 09:11:24,063 INFO spawned: 'httpd' with pid 9
+2017-06-26 09:11:24,069 INFO spawned: 'sshd' with pid 10
+2017-06-26 09:11:24,076 INFO spawned: 'mysql' with pid 11
+2017-06-26 09:11:25,553 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-26 09:11:25,555 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-26 09:11:25,557 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-26 09:29:58,924 WARN received SIGTERM indicating exit request
+2017-06-26 09:29:58,930 INFO waiting for httpd, sshd, mysql to die
+2017-06-26 09:29:58,931 INFO stopped: mysql (exit status 0)
+2017-06-26 09:29:58,934 INFO stopped: sshd (exit status 255)
+2017-06-26 09:29:59,051 INFO stopped: httpd (exit status 0)
+2017-06-26 09:38:18,774 CRIT Supervisor running as root (no user in config file)
+2017-06-26 09:38:18,800 INFO RPC interface 'supervisor' initialized
+2017-06-26 09:38:18,801 CRIT Server 'inet_http_server' running without any HTTP authentication checking
+2017-06-26 09:38:18,806 INFO supervisord started with pid 1
+2017-06-26 09:38:19,811 INFO spawned: 'httpd' with pid 9
+2017-06-26 09:38:19,815 INFO spawned: 'sshd' with pid 10
+2017-06-26 09:38:19,824 INFO spawned: 'mysql' with pid 11
+2017-06-26 09:38:21,083 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-26 09:38:21,085 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-26 09:38:21,086 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-26 09:38:36,164 WARN received SIGTERM indicating exit request
+2017-06-26 09:38:36,166 INFO waiting for httpd, sshd, mysql to die
+2017-06-26 09:38:36,171 INFO stopped: mysql (exit status 0)
+2017-06-26 09:38:36,173 INFO stopped: sshd (exit status 255)
+2017-06-26 09:38:36,285 INFO stopped: httpd (exit status 0)
+2017-06-26 09:38:45,506 CRIT Supervisor running as root (no user in config file)
+2017-06-26 09:38:45,529 INFO RPC interface 'supervisor' initialized
+2017-06-26 09:38:45,530 CRIT Server 'inet_http_server' running without any HTTP authentication checking
+2017-06-26 09:38:45,541 INFO supervisord started with pid 1
+2017-06-26 09:38:46,547 INFO spawned: 'httpd' with pid 9
+2017-06-26 09:38:46,550 INFO spawned: 'sshd' with pid 10
+2017-06-26 09:38:46,554 INFO spawned: 'mysql' with pid 11
+2017-06-26 09:38:47,860 INFO success: httpd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-26 09:38:47,862 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-26 09:38:47,864 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-06-26 18:04:58,803 WARN received SIGTERM indicating exit request
+2017-06-26 18:04:58,804 INFO waiting for httpd, sshd, mysql to die
+2017-06-26 18:04:59,810 INFO stopped: mysql (exit status 0)
+2017-06-26 18:04:59,813 INFO stopped: sshd (exit status 255)
+2017-06-26 18:04:59,919 INFO stopped: httpd (exit status 0)
