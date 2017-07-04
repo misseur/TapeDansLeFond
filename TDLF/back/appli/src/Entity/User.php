@@ -18,33 +18,46 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @id @Column(type="integer") @GeneratedValue
      */
     private $id;
 
     /**
-     * @Column(type="string")
+     * @name @Column(type="string")
      */
     private $name;
 
-
     /**
-     * @email @Column(type="string")
+     * @email @Column(type="string", unique=true)
      */
 
     private $email;
 
     /**
-     * @sha512pass @Column(type="string")
+     * @password @Column(type="string")
      */
 
-    private $sha512pass;
+    private $password;
 
     /**
-     * @token @Column(type="string")
+     * @token @Column(type="string", nullable=true)
      */
 
     private $token;
+
+    /**
+     * Many Users have one Compagny
+     * @ManyToOne(targetEntity="Compagny")
+     * @JoinColumn(name="compagny_id", referencedColumnName="id")
+     */
+
+    private $compagny;
+
+    /**
+     * @role @Column(type="string")
+     */
+
+    private $role;
 
     /**
      * @return int
@@ -108,9 +121,9 @@ class User
      *
      * @return User
      */
-    public function setPass($sha512pass)
+    public function setPassword($password)
     {
-        $this->sha512pass = $sha512pass;
+        $this->password = $password;
         return $this;
     }
 
@@ -119,7 +132,7 @@ class User
      */
     public function getPass()
     {
-        return $this->sha512pass;
+        return $this->password;
     }
 
     /**
@@ -137,6 +150,40 @@ class User
     {
         $this->token = $token;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCompagny()
+    {
+        return $this->compagny;
+    }
+
+    /**
+     * @param mixed $compagny
+     */
+    public function setCompagny($compagny)
+    {
+        $this->compagny = $compagny;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+
 
 
 }

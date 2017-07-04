@@ -13,8 +13,7 @@ use TDLF\Entity;
 
 class UserController implements ControllerProviderInterface
 {
-    public function connect(Application $app)
-    {
+    public function connect(Application $app) {
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/hello', [$this, 'hello'])
@@ -23,8 +22,10 @@ class UserController implements ControllerProviderInterface
         $controllers->get('/blog/{id}', [$this, 'createUser']);
         $controllers->get('/login/{id}', [$this, 'getUser']);
 
-        $controllers->post('/register_user', [$this, 'registerUser']);
-        $controllers->post('/login_user', [$this, 'loginUser']);
+        $controllers->get('/test', [$this, 'isAuth']);
+
+        $controllers->post('/register', [$this, 'registerUser']);
+        $controllers->post('/login', [$this, 'loginUser']);
         $controllers->post('/logout', [$this, 'logoutUser']);
 
         $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
@@ -32,13 +33,11 @@ class UserController implements ControllerProviderInterface
         return $controllers;
     }
 
-    public function hello()
-    {
+    public function hello() {
         return '';
     }
 
-    public function createUser(Application $app, Request $req, $id)
-    {
+    public function createUser(Application $app, Request $req, $id) {
         $user = new Entity\User();
         $user->setName($id);
         $app['entityManager']->persist($user);
@@ -46,18 +45,14 @@ class UserController implements ControllerProviderInterface
         return $user->getId();
     }
 
-    public function getUser(Application $app, $id)
-    {
+    public function getUser(Application $app, $id) {
         $user = $app['entityManager']->find("TDLF\Entity\User", $id);
-        //Method find marche comme ceci (Nom de la classe que tu cherche, id)
-        //$user est un Objet User du coup !
         return $user;
     }
-    
-    public function loginUser(Application $app, Request $req)
-    {
+
+    public function loginUser(Application $app, Request $req) {
         $email = $req->get('email');
-        $pass = $req->get('shapass');
+        $pass = $req->get('password');
         try {
             $user = $app['User']->getUserByEmail($email);
         } catch (\Exception $exception) {
@@ -100,21 +95,40 @@ class UserController implements ControllerProviderInterface
             'id' => $user->getId());
     }
 
-    public function registerUser(Application $app, Request $req)
-    {
-        $name = $req->get('name', null);
+    public function registerUser(Application $app, Request $req) {
         $email = $req->get('email', null);
-        $shapass = $req->get('shapass', null);
+        $shapass = $req->get('password', null);
         
-        if ($name === null || $email === null || $shapass === null) {
+        if ($email === null || $shapass === null) {
             return $app->abort(400, 'Paramètre manquant');
         }
+        $name = array();
+        preg_match("/([a-zA-Z0-9_.+]+)@/", $email, $name);
         $user = new Entity\User();
-        $user->setName($name);
+        $user->setName($name[1]);
         $user->setEmail($email);
-        $user->setPass($shapass);
-        $app['entityManager']->persist($user);
-        $app['entityManager']->flush();
+        $user->setPassword($shapass);
+        try {
+            $app['entityManager']->persist($user);
+            $app['entityManager']->flush();
+        } catch (\Exception $e) {
+            return $app->json("Email déjà enregistré", 400);
+        }
         return $app->json($user->getId(), 200);
+    }
+
+    public function isAuth(Application $app, Request $req) {
+        $expire = $req->get('expire');
+        $token = $req->get('token');
+        $id = $req->get('id');
+        $expire = \DateTime::createFromFormat('Y-m-d H-m-s', $expire);
+        $now = new \DateTime();
+        $now = $now->format('Y-m-d H-m-s');
+        if ($expire <= $now)
+            return FALSE;
+        $user = $this->getUser($app, $id);
+        if ($user->getToken() != $token)
+            return FALSE;
+        return TRUE;
     }
 }
