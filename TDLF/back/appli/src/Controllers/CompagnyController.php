@@ -12,9 +12,14 @@ use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
 use Silex\ControllerCollection;
 use TDLF\Entity\Compagny;
+use TDLF\Entity\User;
 use TDLF\Controllers\UserController;
 
 use Symfony\Component\HttpFoundation\Request;
+
+use TDLF\Entity;
+use TDLF\Controllers;
+
 
 class CompagnyController implements ControllerProviderInterface
 {
@@ -22,41 +27,60 @@ class CompagnyController implements ControllerProviderInterface
     {
         $controllers = $app['controllers_factory'];
 
-        $controllers->post('/compagny/update', [$this, 'updateCompagny']);
-        $controllers->get('/compagny/*', [$this, 'allCompagny']);
-        $controllers->get('/compagny/create', [$this, 'createCompagny']);
+        $controllers->post('/compagny/update', [$this, 'updateCompagny'])
+            ->before($app['isAuth']())
+        ;
+
+        $controllers->post('/compagny/all', [$this, 'allCompagny'])
+            ->before($app['isAuth']());
+        $controllers->post('/compagny/create', [$this, 'createCompagny'])
+            ->before($app['isAuth']());
+
+        $controllers->get('/compagny/{id}', [$this, 'getCompagny'])
+            ->before($app['getCompagny']())
+        ;
+
+        $controllers->post('/compagny/associate/{id}', [$this, 'associateCompagny'])
+            ->before($app['isAuth']())
+            ->before($app['getCompagny']())
+        ;
+
+        $controllers->post('/compagny/{id}', [$this, 'getCompagny'])
+            ->before($app['isAuth']())
+            ->before($app['getCompagny']())
+        ;
+
 
         $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
         return $controllers;
     }
 
-    public function createCompagny(Application $app, $name){
+    public function associateCompagny(Application $app, Request $req, User $user, Compagny $compagny) {
+        $user->setCompagny($compagny);
+        $app['flush']($user);
+        $app->json("Compagny associate", 200);
+    }
+
+    public function createCompagny(Application $app, Request $req, User $user){
+        $name = $req->get('name');
         $compagny = new Compagny();
         $compagny->setName($name);
         $app['entityManager']->persist($compagny);
         $app['entityManager']->flush();
-        return $compagny;
+        return $app->json($compagny->getId(), 200);
     }
 
-    public function getCompagny(Application $app, $id) {
-        $compagny = $app['entityManager']->find("TDLF\Entity\Compagny", $id);
-        return $compagny;
+    public function getCompagny(Application $app, Request $req, Compagny $compagny) {
+        return $app->json($compagny, 200);
     }
 
     public function allCompagny(Application $app, Request $req = NULL) {
-
-        return $app->json($app['Compagny']->getAllCompagny(), 200);
+        $compagny = $app['Compagny']->getAllCompagny();
+        return $app->json($compagny, 200);
     }
 
-    public function updateCompagny(Application $app, Request $req) {
-        $userController = new UserController();
-        if (!($userController->isAuth($app, $req)))
-            return $app->json('Unthorized', 401);
-        $iduser = $req->get('id');
-        $user = $userController->getUser($app, $iduser);
-        if ($user->getCompagny() == NULL)
-            return $app->json("The user doesn't have a compagny registred", 400);
-        $compagny = $this->getCompagny($app, $user->getCompagny());
+    public function updateCompagny(Application $app, Request $req, User $user) {
+        $compagny = $user->getCompagny();
         if ($compagny == NULL)
             return $app->json("The user doesn't have a compagny registred", 400);
         $address = $req->get('address');
@@ -71,8 +95,8 @@ class CompagnyController implements ControllerProviderInterface
             $compagny->setCity($city);
         if (!empty($logo))
             $compagny->setLogo($logo);
-        $app['entityManager']->persist($compagny);
-        $app['entityManager']->flush();
+        $app['flush']($compagny);
+        return $app->json($app['Compagny']->getCompagny($compagny->getId()), 200);
     }
 
 

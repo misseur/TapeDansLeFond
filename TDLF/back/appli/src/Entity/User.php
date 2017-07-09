@@ -23,7 +23,7 @@ class User
     private $id;
 
     /**
-     * @name @Column(type="string")
+     * @name @Column(type="string", nullable=true)
      */
     private $name;
 
@@ -54,7 +54,7 @@ class User
     private $compagny;
 
     /**
-     * @role @Column(type="string")
+     * @role @Column(type="string", nullable=true)
      */
 
     private $role;

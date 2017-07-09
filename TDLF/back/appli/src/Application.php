@@ -20,7 +20,7 @@ class Application extends Silex\Application
         /*
         ** TODO: gestion environnement prod/dev
         */
-        $isDevMode = false;
+        $isDevMode = true;
 
         $app['debug'] = true;
 
@@ -33,6 +33,7 @@ class Application extends Silex\Application
             ->registerEvent()
             ->registerDb($isDevMode)
             ->registerRepository()
+            ->registerService()
         ;
     }
 
@@ -124,7 +125,11 @@ class Application extends Silex\Application
             'user'     => 'bx',
             'password' => 'toto',
             'host'     => 'db',
-            'driver'   => 'pdo_mysql'
+            'driver'   => 'pdo_mysql',
+            'driverOptions' => array(
+             1002 => 'SET NAMES utf8'
+    )
+
         ];
 
         $config = Setup::createAnnotationMetadataConfiguration(
@@ -148,4 +153,23 @@ class Application extends Silex\Application
         return $this;
     }
 
+    protected function registerService()
+    {
+        $this['UserSvc'] = function ($app) {
+            return new \TDLF\Services\UserService($app);
+        };
+
+        $this['CompagnySvc'] = function ($app) {
+            return new \TDLF\Services\CompagnyService($app);
+        };
+
+        $this['flush'] = function ($app) {
+          return function ($entity) use ($app) {
+              $app['entityManager']->persist($entity);
+              $app['entityManager']->flush();
+          };
+        };
+
+        return $this;
+    }
 }

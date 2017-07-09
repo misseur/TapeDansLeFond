@@ -8,14 +8,28 @@
 
 namespace TDLF\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use JsonSerializable;
 /**
  *
  * @Entity @Table(name="compagny")
  */
-class Compagny
+class Compagny implements JsonSerializable
 {
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->name,
+            'id' => $this->id,
+            'teams' => $this->teams,
+            'address' => $this->address,
+            'cp' => $this->postalcode,
+            'city' => $this->city,
+            'logo' => $this->logo
+        ];
+    }
+
     /**
      * @id @Column(type="integer") @GeneratedValue
      */
@@ -27,48 +41,53 @@ class Compagny
     private $name;
 
     /**
-     * @teams @Column(type="string")
+     * @OneToMany(targetEntity="Team", mappedBy="compagny")
      */
 
     private $teams;
 
     /**
-     * @address @Column(type="string")
+     * @address @Column(type="string", nullable=true)
      */
 
     private $address;
 
     /**
-     * @postalcode @Column(type="string")
+     * @postalcode @Column(type="string", nullable=true)
      */
 
     private $postalcode;
 
     /**
-     * @city @Column(type="string")
+     * @city @Column(type="string", nullable=true)
      */
 
     private $city;
 
     /**
-     * @logo @Column(type="string")
+     * @logo @Column(type="string", nullable=true)
      */
 
     private $logo;
 
     /**
-     * @endEmail @Column(type="string")
+     * @endEmail @Column(type="string", nullable=true)
      */
 
     private $endEmail;
 
     /**
      * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
 
     private $adminUser;
 
+
+    public function __construct()
+    {
+        $this->teams = new ArrayCollection();
+    }
     /**
      * @return mixed
      */
@@ -107,14 +126,6 @@ class Compagny
     public function getTeams()
     {
         return $this->teams;
-    }
-
-    /**
-     * @param mixed $teams
-     */
-    public function setTeams($teams)
-    {
-        $this->teams = $teams;
     }
 
     /**

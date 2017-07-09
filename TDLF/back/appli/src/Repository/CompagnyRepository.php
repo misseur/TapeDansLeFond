@@ -12,18 +12,11 @@ class CompagnyRepository extends EntityRepository
 {
     public function getAllCompagny() {
         $compagnies = $this->_em->createQuery('select c from TDLF\Entity\Compagny c')->getResult();
-        $i = 0;
-        foreach ($compagnies as $compagny) {
-            $tmp = array();
-            $tmp['name'] = $compagny->getName();
-            $tmp['id'] = $compagny->getId();
-            $tmp['teams'] = $compagny->getTeams();
-            $tmp['address'] = $compagny->getAddress();
-            $tmp['cp'] = $compagny->getPostalcode();
-            $tmp['city'] = $compagny->getCity();
-            $tmp['logo'] = $compagny->getLogo();
-            $result[$i] = $tmp;
-        }
-        return $result;
+        return $compagnies;
+    }
+
+    public function getCompagny($id) {
+        $compagny = $this->_em->createQuery('select c from TDLF\Entity\Compagny c where c.id =\''.$id.'\'')->getSingleResult();
+        return $compagny;
     }
 }

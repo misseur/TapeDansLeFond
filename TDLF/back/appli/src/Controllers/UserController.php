@@ -16,8 +16,7 @@ class UserController implements ControllerProviderInterface
     public function connect(Application $app) {
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('/hello', [$this, 'hello'])
-                    ->before($app['Hello']('World!'));
+        $controllers->get('/hello', [$this, 'hello']);
 
         $controllers->get('/blog/{id}', [$this, 'createUser']);
         $controllers->get('/login/{id}', [$this, 'getUser']);
@@ -34,7 +33,7 @@ class UserController implements ControllerProviderInterface
     }
 
     public function hello() {
-        return '';
+        return 'fd';
     }
 
     public function createUser(Application $app, Request $req, $id) {
@@ -43,11 +42,6 @@ class UserController implements ControllerProviderInterface
         $app['entityManager']->persist($user);
         $app['entityManager']->flush();
         return $user->getId();
-    }
-
-    public function getUser(Application $app, $id) {
-        $user = $app['entityManager']->find("TDLF\Entity\User", $id);
-        return $user;
     }
 
     public function loginUser(Application $app, Request $req) {
@@ -67,7 +61,7 @@ class UserController implements ControllerProviderInterface
 
     public function logoutUser(Application $app, Request $req) {
         $id = $req->get('id');
-        $user = $this->getUser($app, $id);
+        $user = $this->getUser($id);
         if ($user->getToken() == "")
             return $app->json("Logout impossible", 400);
         else {
@@ -80,7 +74,7 @@ class UserController implements ControllerProviderInterface
 
     public function goodCredentials(Application $app, Entity\User $user) {
         $token = $user->getEmail();
-        $date = new \DateTime();
+        $date = new \DateTime('+1days');
         $date = $date->format('Y-m-d H-m-s');
         $token = $token.$date;
         for ($i = 0; $i < 10; $i++) {
@@ -111,13 +105,13 @@ class UserController implements ControllerProviderInterface
         try {
             $app['entityManager']->persist($user);
             $app['entityManager']->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $app->json("Email déjà enregistré", 400);
         }
         return $app->json($user->getId(), 200);
     }
 
-    public function isAuth(Application $app, Request $req) {
+    public function isAuth(Request $req) {
         $expire = $req->get('expire');
         $token = $req->get('token');
         $id = $req->get('id');
@@ -126,7 +120,7 @@ class UserController implements ControllerProviderInterface
         $now = $now->format('Y-m-d H-m-s');
         if ($expire <= $now)
             return FALSE;
-        $user = $this->getUser($app, $id);
+        $user = $this->getUser($id);
         if ($user->getToken() != $token)
             return FALSE;
         return TRUE;
