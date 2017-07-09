@@ -6,11 +6,13 @@ import App from './App';
 import Landing from './Landing';
 import sagaMiddleware from './middlewares/saga';
 import IndexSagas from './sagas';
-import Dashboard from './Dashboard';
+import Dashboard from './Dashboard/components';
 import {
     checkIndexAuthorization,
     checkWidgetAuthorization,
 } from './lib/check-auth';
+import Team from './Team';
+import Tabs from './Tabs';
 
 if (IS_CLIENT) {
     try {
@@ -45,9 +47,16 @@ export default async (store) => {
             <Route path="home" component={Landing} />
             <Route
                 // onEnter={checkWidgetAuthorization(store)}
-                path="dashboard"
-                component={Dashboard}
-            />
+                // path="dashboard"
+                path="/"
+                component={Tabs}
+            >
+                <Route path="/dashboard" component={Dashboard} />
+                <Route path="team" component={Team} />
+                <Route path="league" component={Team} />
+                <Route path="company" component={Team} />
+                <Route path="profile" component={Team} />
+            </Route>
         </Route>
     );
 };

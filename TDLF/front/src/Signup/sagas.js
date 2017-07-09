@@ -6,7 +6,7 @@ import {
 } from './constants';
 import { handleApiErrors } from '../lib/api-errors';
 
-const signupUrl = 'http://localhost:9500/register_user';
+const signupUrl = 'http://localhost:9500/register';
 
 function signupApi(email, password) {
     return fetch(signupUrl, {
