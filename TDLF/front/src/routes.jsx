@@ -1,4 +1,4 @@
-import { Route, IndexRedirect, IndexRoute } from 'vitaminjs/react-router';
+import { Route, IndexRedirect } from 'vitaminjs/react-router';
 import 'regenerator-runtime/runtime';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
@@ -13,6 +13,7 @@ import {
 } from './lib/check-auth';
 import Team from './Team';
 import Tabs from './Tabs';
+import { unsetClient } from './client/actions';
 
 if (IS_CLIENT) {
     try {
@@ -42,16 +43,14 @@ export default async (store) => {
     runSaga();
     return (
         <Route path="/" component={App}>
-            {/* <IndexRoute onEnter={checkIndexAuthorization(store)} />*/}
             <IndexRedirect to="home" />
-            <Route path="home" component={Landing} />
+            <Route path="home" component={Landing} onEnter={checkIndexAuthorization(store)} />
             <Route
-                // onEnter={checkWidgetAuthorization(store)}
-                // path="dashboard"
+                onEnter={checkWidgetAuthorization(store)}
                 path="/"
                 component={Tabs}
             >
-                <Route path="/dashboard" component={Dashboard} />
+                <Route path="dashboard" component={Dashboard} />
                 <Route path="team" component={Team} />
                 <Route path="league" component={Team} />
                 <Route path="company" component={Team} />

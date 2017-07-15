@@ -7,31 +7,39 @@ import s from './style.css';
 const propTypes = {
     title: PropTypes.string.isRequired,
     icon: PropTypes.element.isRequired,
-    link: PropTypes.string.isRequired,
-    isActive: PropTypes.bool.isRequired,
+    link: PropTypes.string,
+    onClick: PropTypes.func,
 };
 
-const isActive = (path, routeToTest) => path === routeToTest || path === `/${routeToTest}`;
+const defaultProps = {
+    link: '',
+    onClick: () => {},
+}
 
-const tabStyle = isActive => ({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottom: isActive ? '3px solid white' : '3px solid transparent',
+const tabStyle = {
+    borderBottom: '3px solid transparent',
     flex: '1 1 0%',
     padding: '10px',
-});
+};
 
-const Tab = ({ title, icon, link, pathname }) =>
-    <Link style={tabStyle(isActive(pathname, link))} to={link}>
+const activeStyle = {
+    borderBottom: '3px solid white',
+};
+
+const Tab = ({ title, icon, link, onClick }) =>
+    <Link
+        activeStyle={activeStyle}
+        style={tabStyle}
+        to={link}
+        onClick={onClick}
+    >
         <div className={s.tab}>
             {icon}
             {title}
         </div>
-    </Link>
-;
+    </Link>;
 
 Tab.propTypes = propTypes;
+Tab.defaultProps = defaultProps;
 
 export default withStyles(s)(Tab);

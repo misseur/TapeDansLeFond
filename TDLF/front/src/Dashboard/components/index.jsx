@@ -4,7 +4,6 @@ import autobind from 'autobind-decorator';
 
 class Dashboard extends Component {
     render() {
-        console.log(this.props);
         return (
             <div>
                 DASHBOARD
