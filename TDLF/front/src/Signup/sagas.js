@@ -6,7 +6,8 @@ import {
 } from './constants';
 import { handleApiErrors } from '../lib/api-errors';
 
-const signupUrl = 'http://localhost:9500/register_user';
+// const signupUrl = 'http://localhost:9500/register';
+const signupUrl = 'http://widgetizer.jcolemorrison.com/api/Clients/';
 
 function signupApi(email, password) {
     return fetch(signupUrl, {
@@ -14,7 +15,8 @@ function signupApi(email, password) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, shapass: password, uuid: '737', name: 'jan bon II' }),
+        body: JSON.stringify({ email, password }),
+        // body: JSON.stringify({ email, shapass: password, uuid: '737', name: 'jan bon II' }),
     })
     .then(handleApiErrors)
     .then(response => response.json())

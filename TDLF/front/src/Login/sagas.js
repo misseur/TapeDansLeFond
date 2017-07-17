@@ -15,6 +15,7 @@ import {
 } from '../client/constants';
 
 const loginUrl = 'http://widgetizer.jcolemorrison.com/api/Clients/login';
+// const loginUrl = 'http://localhost:9500/login';
 
 function loginApi(email, password) {
     return fetch(loginUrl, {
@@ -33,20 +34,24 @@ function loginApi(email, password) {
 function* logout() {
     yield put(unsetClient());
     if (IS_CLIENT) {
-        localStorage.removeItem('token');
+        // localStorage.removeItem('token');
+        document.cookie = 'jwt=';
     }
     browserHistory.push('/home');
 }
 
 function* loginFlow(email, password) {
+    console.log('login');
     let token;
     try {
         token = yield call(loginApi, email, password);
         yield put(setClient(token));
         yield put({ type: LOGIN_SUCCESS });
-        if (IS_CLIENT) {
-            localStorage.setItem('token', JSON.stringify(token));
-        }
+        // if (IS_CLIENT) {
+            // localStorage.setItem('token', JSON.stringify(token));
+        document.cookie = `jwt=${encodeURIComponent(JSON.stringify(token))}`;
+            // document.cookie = `jwt=${JSON.stringify(token)}`;
+        // }
         browserHistory.push('/dashboard');
     } catch (error) {
         yield put({ type: LOGIN_ERROR, error });
