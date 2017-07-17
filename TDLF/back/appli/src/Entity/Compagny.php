@@ -22,7 +22,6 @@ class Compagny implements JsonSerializable
         return [
             'name' => $this->name,
             'id' => $this->id,
-            'teams' => $this->teams,
             'address' => $this->address,
             'cp' => $this->postalcode,
             'city' => $this->city,
@@ -39,12 +38,6 @@ class Compagny implements JsonSerializable
      * @name @Column(type="string")
      */
     private $name;
-
-    /**
-     * @OneToMany(targetEntity="Team", mappedBy="compagny")
-     */
-
-    private $teams;
 
     /**
      * @address @Column(type="string", nullable=true)
@@ -83,11 +76,11 @@ class Compagny implements JsonSerializable
 
     private $adminUser;
 
-
     public function __construct()
     {
         $this->teams = new ArrayCollection();
     }
+
     /**
      * @return mixed
      */

@@ -16,19 +16,18 @@ class AuthMiddleware implements ServiceProviderInterface
     {
         $app['isAuth'] = $app->protect(function () {
             return function (Request $req, Application $app) {
-                $expire = $req->get('expire');
-                $token = $req->get('token');
-                $id = $req->get('id');
+                $token = $req->headers->get('token');
+                $expire = $req->headers->get('expire');
+                $id = $req->headers->get('id');
                 $expire = \DateTime::createFromFormat('Y-m-d H-m-s', $expire);
                 $now = new \DateTime();
                 $now = $now->format('Y-m-d H-m-s');
                 if ($expire <= $now)
-                    return $app->json('Unthorized', 401);
+                    return $app->json('Unauthorized', 401);
                 $user = $app['UserSvc']->getUser($id);
-                var_dump($id);
                 $req->attributes->set('user', $user);
                 if ($user->getToken() != $token)
-                    return $app->json('Unthorized', 401);
+                    return $app->json('Unauthorized', 401);
             };
         });
     }

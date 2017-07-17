@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 use TDLF\Entity;
 use TDLF\Controllers;
 
-
 class CompagnyController implements ControllerProviderInterface
 {
     public function connect(Application $app)
@@ -31,21 +30,19 @@ class CompagnyController implements ControllerProviderInterface
             ->before($app['isAuth']())
         ;
 
-        $controllers->post('/compagny/all', [$this, 'allCompagny'])
-            ->before($app['isAuth']());
+        $controllers->get('/compagny/all', [$this, 'allCompagny'])
+            ->before($app['isAuth']())
+        ;
+
         $controllers->post('/compagny/create', [$this, 'createCompagny'])
-            ->before($app['isAuth']());
+            ->before($app['isAuth']())
+        ;
 
         $controllers->get('/compagny/{id}', [$this, 'getCompagny'])
             ->before($app['getCompagny']())
         ;
 
         $controllers->post('/compagny/associate/{id}', [$this, 'associateCompagny'])
-            ->before($app['isAuth']())
-            ->before($app['getCompagny']())
-        ;
-
-        $controllers->post('/compagny/{id}', [$this, 'getCompagny'])
             ->before($app['isAuth']())
             ->before($app['getCompagny']())
         ;
@@ -65,8 +62,8 @@ class CompagnyController implements ControllerProviderInterface
         $name = $req->get('name');
         $compagny = new Compagny();
         $compagny->setName($name);
-        $app['entityManager']->persist($compagny);
-        $app['entityManager']->flush();
+        $compagny->setAdminUser($user);
+        $app['flush']($compagny);
         return $app->json($compagny->getId(), 200);
     }
 
@@ -81,7 +78,7 @@ class CompagnyController implements ControllerProviderInterface
 
     public function updateCompagny(Application $app, Request $req, User $user) {
         $compagny = $user->getCompagny();
-        if ($compagny == NULL)
+        if ($compagny == NULL || $compagny->getAdmin)
             return $app->json("The user doesn't have a compagny registred", 400);
         $address = $req->get('address');
         $cp = $req->get('cp');

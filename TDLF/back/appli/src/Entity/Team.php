@@ -8,6 +8,7 @@
 
 namespace TDLF\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,6 +17,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Team
 {
+    public function __construct()
+    {
+        $this->players = new ArrayCollection();
+    }
 
     /**
      * @id @Column(type="integer") @GeneratedValue
@@ -40,11 +45,13 @@ class Team
     private $creator;
 
     /**
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="player_id", referencedColumnName="id")
+     * @var ArrayCollection Team $players
+     *
+     * @ManyToMany(targetEntity="User", mappedBy="teams", cascade={"persist", "merge"})
+     *
      */
 
-    private $player;
+    private $players;
 
     /**
      * @return mixed
@@ -111,22 +118,20 @@ class Team
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getPlayer()
+    public function getPlayers()
     {
-        return $this->player;
+        return $this->players;
     }
 
     /**
-     * @param mixed $player
+     * @param ArrayCollection $players
      */
-    public function setPlayer($player)
+    public function setPlayers($players)
     {
-        $this->player = $player;
+        $this->players = $players;
     }
-
-
 
 
 }

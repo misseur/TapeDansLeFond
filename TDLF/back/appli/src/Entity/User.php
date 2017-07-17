@@ -8,6 +8,7 @@
 
 namespace TDLF\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -17,6 +18,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+    public function __construct()
+    {
+        $this->teams = new ArrayCollection();
+    }
+
     /**
      * @id @Column(type="integer") @GeneratedValue
      */
@@ -54,13 +60,27 @@ class User
     private $compagny;
 
     /**
+     * Many Users have many Teams
+     *
+     * @var ArrayCollection Team $teams
+     *
+     * @ManyToMany(targetEntity="Team", inversedBy="players", cascade={"persist", "merge"})
+     * @JoinTable(name="users_teams",
+     *     joinColumns={@JoinColumn(name="User_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@JoinColumn(name="Team_id", referencedColumnName="id")}
+     * )
+     */
+
+    private $teams;
+
+    /**
      * @role @Column(type="string", nullable=true)
      */
 
     private $role;
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getId()
     {
@@ -68,18 +88,15 @@ class User
     }
 
     /**
-     * @param int $id
-     *
-     * @return User
+     * @param mixed $id
      */
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getName()
     {
@@ -87,7 +104,15 @@ class User
     }
 
     /**
-     * @return string
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
      */
     public function getEmail()
     {
@@ -95,48 +120,31 @@ class User
     }
 
     /**
-     * @param string $name
-     *
-     * @return User
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @param string $email
-     *
-     * @return User
+     * @param mixed $email
      */
     public function setEmail($email)
     {
         $this->email = $email;
-        return $this;
     }
 
     /**
-     * @param string $pass
-     *
-     * @return User
+     * @return mixed
      */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPass()
+    public function getPassword()
     {
         return $this->password;
     }
 
     /**
-     * @return string
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return mixed
      */
     public function getToken()
     {
@@ -144,7 +152,7 @@ class User
     }
 
     /**
-     * @param string $token
+     * @param mixed $token
      */
     public function setToken($token)
     {
@@ -168,6 +176,22 @@ class User
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getTeams()
+    {
+        return $this->teams;
+    }
+
+    /**
+     * @param ArrayCollection $teams
+     */
+    public function setTeams($teams)
+    {
+        $this->teams = $teams;
+    }
+
+    /**
      * @return mixed
      */
     public function getRole()
@@ -182,8 +206,6 @@ class User
     {
         $this->role = $role;
     }
-
-
 
 
 }

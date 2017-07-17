@@ -33,6 +33,9 @@ class TeamController implements ControllerProviderInterface
         $controllers->post('/team/player', [$this, 'haveTeamPlayer'])
             ->before($app['isAuth']());
 
+        $controllers->post('/team/addplayer', [$this, 'associatePlayer'])
+            ->before($app['isAuth']());
+
         $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
         return $controllers;
     }
@@ -40,6 +43,7 @@ class TeamController implements ControllerProviderInterface
     public function addTeam(Application $app, Request $req, User $user) {
         $name = $req->get('name');
         $this->createTeam($app, $name, $user);
+        return $app->json("OK", 200);
     }
 
     public function createTeam(Application $app, $name, $user){
@@ -48,17 +52,32 @@ class TeamController implements ControllerProviderInterface
         $team->setCreator($user);
         $app['entityManager']->persist($team);
         $app['entityManager']->flush();
-        $entreprise = $user->getCompagny();
-        $addteam = $entreprise->getTeams()->add($team);
-        $app['entityManager']->persist($entreprise);
+        $user->getTeams()->add($team);
+        $app['entityManager']->persist($user);
         $app['entityManager']->flush();
         return $team;
     }
 
+    public function associatePlayer(Application $app, Request $req, User $user) {
+        $teamId = $req->get('id');
+        $team = $app['entityManager']->find("TDLF\Entity\Team", $teamId);
+        $nbrPlayer = 0;
+        $players = $team->getPlayers();
+        foreach ($players as $player) {
+            $nbrPlayer++;
+        }
+        if ($nbrPlayer < 2) {
+            $user->getTeams()->add($team);
+            $app['entityManager']->persist($user);
+            $app['entityManager']->flush();
+            return $app->json("User registred in the team", 200);
+        }
+        else
+            return $app->json("Team have already 2 players", 401);
+    }
+
     public function haveTeamPlayer(Application $app, Request $req, User $user) {
-        $entreprise = $user->getCompagny();
-        $teams = $entreprise->getTeams();
-        //var_dump($teams->toArray());
+        $teams = $user->getTeams();
         return $app->json($this->tojson($teams), 200);
     }
 
@@ -70,7 +89,7 @@ class TeamController implements ControllerProviderInterface
             $tmp['id'] = $team->getId();
             $tmp['name'] = $team->getName();
             $tmp['creator'] = $team->getCreator();
-            $tmp['player'] = $team->getPlayer();
+            $tmp['player'] = $team->getPlayers();
             $result[$i] = $tmp;
             $i++;
         }
