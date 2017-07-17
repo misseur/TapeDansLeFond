@@ -32,7 +32,8 @@ class Application extends Silex\Application
             ->registerRoutes()
             ->registerEvent()
             ->registerDb($isDevMode)
-            ->registerRepository()
+            ->registerRepository()¨
+            ->registerMailer()
             ->registerService()
         ;
     }
@@ -153,6 +154,21 @@ class Application extends Silex\Application
         return $this;
     }
 
+    protected function registerMailer()
+    {
+        $this->register(new Silex\Provider\SwiftmailerServiceProvider());
+
+        $option = [
+            'host' => '127.0.0.1',
+            'port' => '1025'
+        ];
+
+        $this['swiftmailer.options'] = $options;
+        $this['swiftmailer.use_spool'] = !($this['debug']);
+
+        return $this;
+    }
+
     protected function registerService()
     {
         $this['UserSvc'] = function ($app) {
@@ -169,6 +185,10 @@ class Application extends Silex\Application
               $app['entityManager']->flush();
           };
         };
+
+        $this['mailerSvc'] = function ($app) {
+            return new \TDLF\Services\MailerManagerService($app);
+        }
 
         return $this;
     }

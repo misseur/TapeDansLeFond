@@ -10,14 +10,6 @@
 namespace TDLF\Services;
 
 use Silex\Application;
-use Silex\Api\ControllerProviderInterface;
-use Silex\ControllerCollection;
-use TDLF\Entity\Compagny;
-use TDLF\Controllers\UserController;
-
-use Symfony\Component\HttpFoundation\Request;
-
-use TDLF\Entity;
 
 class CompagnyService
 {
