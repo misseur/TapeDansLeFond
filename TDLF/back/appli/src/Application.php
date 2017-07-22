@@ -27,6 +27,7 @@ class Application extends Silex\Application
         $this
             ->register(new Silex\Provider\ServiceControllerServiceProvider())
             ->register(new Silex\Provider\HttpFragmentServiceProvider())
+            ->register(new Silex\Provider\TwigServiceProvider())
             ->registerMiddleware()
             ->registerCors()
             ->registerRoutes()

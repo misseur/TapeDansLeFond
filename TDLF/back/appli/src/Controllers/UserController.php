@@ -36,7 +36,7 @@ class UserController implements ControllerProviderInterface
         $from = array('tdlf7fault@gmail.com' => 'Tape Dans Le Fond');
         $to = array($email => $name);
         $message = $app['mailerSvc']->getMessage($subject, $from, $to);
-        $message = $app['mailerSvc']->setBody($message, $content);
+        $message = $app['mailerSvc']->setTeamInvitationBody($message, ['bloub' => 'bloub']);
         $result = $app['mailerSvc']->sendMessage($message);
         return $app->json($result, 200);
     }
@@ -85,11 +85,11 @@ class UserController implements ControllerProviderInterface
         $user->setToken($token);
         $app['entityManager']->persist($user);
         $app['entityManager']->flush();
-        return array(
+        return [
             'token' => $token,
             'expire' => $date,
             'id' => $user->getId()
-        );
+        ];
     }
 
     public function registerUser(Application $app, Request $req) {
@@ -98,7 +98,7 @@ class UserController implements ControllerProviderInterface
         if ($email === null || $shapass === null) {
             return $app->abort(400, 'Paramètre manquant');
         }
-        $name = array();
+        $name = [];
         preg_match("/([a-zA-Z0-9_.+]+)@/", $email, $name);
         $user = new Entity\User();
         $user->setName($name[1]);

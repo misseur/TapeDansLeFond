@@ -94,10 +94,10 @@ class TeamController implements ControllerProviderInterface
     }
 
     public function tojson($teams) {
-        $result = array();
+        $result = [];
         $i = 0;
         foreach ($teams as $team) {
-            $tmp = array();
+            $tmp = [];
             $tmp['id'] = $team->getId();
             $tmp['name'] = $team->getName();
             $tmp['creator'] = $team->getCreator();
