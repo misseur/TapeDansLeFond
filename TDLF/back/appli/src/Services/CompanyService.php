@@ -11,7 +11,7 @@ namespace TDLF\Services;
 
 use Silex\Application;
 
-class CompagnyService
+class CompanyService
 {
     private $app;
 
@@ -20,7 +20,7 @@ class CompagnyService
         $this->app = $app;
     }
 
-    public function getCompagny($id) {
-        return $this->app['entityManager']->find("TDLF\Entity\Compagny", $id);
+    public function getCompany($id) {
+        return $this->app['entityManager']->find("TDLF\Entity\Company", $id);
     }
 }

@@ -23,6 +23,15 @@ class User
         $this->teams = new ArrayCollection();
     }
 
+    public function jsonSerialize() {
+        return [
+            'name' => $this->name,
+            'id' => $this->id,
+            'email' => $this->email,
+            'company' => $this->company
+        ];
+    }
+
     /**
      * @id @Column(type="integer") @GeneratedValue
      */
@@ -52,12 +61,12 @@ class User
     private $token;
 
     /**
-     * Many Users have one Compagny
-     * @ManyToOne(targetEntity="Compagny")
-     * @JoinColumn(name="compagny_id", referencedColumnName="id")
+     * Many Users have one Company
+     * @ManyToOne(targetEntity="Company")
+     * @JoinColumn(name="company_id", referencedColumnName="id")
      */
 
-    private $compagny;
+    private $company;
 
     /**
      * Many Users have many Teams
@@ -162,17 +171,17 @@ class User
     /**
      * @return mixed
      */
-    public function getCompagny()
+    public function getCompany()
     {
-        return $this->compagny;
+        return $this->company;
     }
 
     /**
-     * @param mixed $compagny
+     * @param mixed $company
      */
-    public function setCompagny($compagny)
+    public function setCompany($company)
     {
-        $this->compagny = $compagny;
+        $this->company = $company;
     }
 
     /**

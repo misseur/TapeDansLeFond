@@ -36,14 +36,21 @@ class TeamController implements ControllerProviderInterface
         $controllers->post('/team/addplayer', [$this, 'associatePlayer'])
             ->before($app['isAuth']());
 
+        $controllers->get('/team/{id}', [$this, 'getTeam'])
+            ->before($app['isAuth']());
+
         $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
         return $controllers;
     }
 
+    public function getTeam(Application $app, User $user, $id) {
+        return $app->json($app['TeamSvc']->getTeam($id), 200);
+    }
+
     public function addTeam(Application $app, Request $req, User $user) {
         $name = $req->get('name');
-        $this->createTeam($app, $name, $user);
-        return $app->json("OK", 200);
+        //$this->createTeam($app, $name, $user);
+        return $app->json($this->createTeam($app, $name, $user), 200);
     }
 
     public function createTeam(Application $app, $name, $user){
@@ -59,13 +66,13 @@ class TeamController implements ControllerProviderInterface
     }
 
     public function associatePlayer(Application $app, Request $req, User $user) {
-        if ($user->getCompagny() == NULL)
-            return $app->json("User doesn't have a compagny", 401);
+        if ($user->getCompany() == NULL)
+            return $app->json("User doesn't have a company", 401);
         $teamId = $req->get('id');
         $team = $app['entityManager']->find("TDLF\Entity\Team", $teamId);
         $adminUser = $team->getCreator();
-        if ($user->getCompagny() != $adminUser->getCompagny())
-            return $app->json("User isn't in the same compagny", 401);
+        if ($user->getCompany() != $adminUser->getCompany())
+            return $app->json("User isn't in the same company", 401);
         $nbrPlayer = 0;
         $players = $team->getPlayers();
         foreach ($players as $player) {
@@ -75,7 +82,7 @@ class TeamController implements ControllerProviderInterface
             $user->getTeams()->add($team);
             $app['entityManager']->persist($user);
             $app['entityManager']->flush();
-            return $app->json("User registred in the team", 200);
+            return $app->json($team, 200);
         }
         else
             return $app->json("Team have already 2 players", 401);

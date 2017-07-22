@@ -10,13 +10,27 @@ namespace TDLF\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use JsonSerializable;
 /**
  *
  * @Entity @Table(name="team")
  */
-class Team
+class Team implements JsonSerializable
 {
+    public function jsonSerialize()
+    {
+        $players = [];
+        foreach ($this->players as $player) {
+            $players[] = $player->jsonSerialize();
+        }
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'creator' => $this->creator->jsonSerialize(),
+            'players' => $players
+        ];
+    }
+
     public function __construct()
     {
         $this->players = new ArrayCollection();

@@ -6,6 +6,7 @@ use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
 
 use Symfony\Component\HttpFoundation\Request;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

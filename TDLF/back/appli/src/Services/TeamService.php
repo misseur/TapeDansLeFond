@@ -1,18 +1,17 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: benoit-xavierhouvet
- * Date: 05/07/2017
- * Time: 00:26
+ * Date: 22/07/2017
+ * Time: 15:18
  */
 
 namespace TDLF\Services;
 
 use Silex\Application;
-use TDLF\Entity\User;
+use TDLF\Entity\Team;
 
-class UserService
+class TeamService
 {
     private $app;
 
@@ -21,7 +20,8 @@ class UserService
         $this->app = $app;
     }
 
-    public function getUser($id) {
-        return $this->app['entityManager']->find("TDLF\Entity\User", $id);
+    public function getTeam($id) {
+        return $this->app['entityManager']->find("TDLF\Entity\Team", $id);
     }
+
 }

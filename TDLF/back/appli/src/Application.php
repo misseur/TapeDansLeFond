@@ -175,8 +175,12 @@ class Application extends Silex\Application
             return new \TDLF\Services\UserService($app);
         };
 
-        $this['CompagnySvc'] = function ($app) {
-            return new \TDLF\Services\CompagnyService($app);
+        $this['CompanySvc'] = function ($app) {
+            return new \TDLF\Services\CompanyService($app);
+        };
+
+        $this['TeamSvc'] = function ($app) {
+            return new \TDLF\Services\TeamService($app);
         };
 
         $this['flush'] = function ($app) {

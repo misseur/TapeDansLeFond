@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 /**
  *
- * @Entity @Table(name="compagny")
+ * @Entity @Table(name="company")
  */
-class Compagny implements JsonSerializable
+class Company implements JsonSerializable
 {
     public function jsonSerialize()
     {
