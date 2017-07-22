@@ -27,6 +27,7 @@ class Application extends Silex\Application
         $this
             ->register(new Silex\Provider\ServiceControllerServiceProvider())
             ->register(new Silex\Provider\HttpFragmentServiceProvider())
+            ->register(new Silex\Provider\TwigServiceProvider())
             ->registerMiddleware()
             ->registerCors()
             ->registerRoutes()
@@ -181,6 +182,10 @@ class Application extends Silex\Application
 
         $this['TeamSvc'] = function ($app) {
             return new \TDLF\Services\TeamService($app);
+        };
+
+        $this['TeamSvc'] = function ($app) {
+            return new \TDLF\Services\CompagnyService($app);
         };
 
         $this['flush'] = function ($app) {

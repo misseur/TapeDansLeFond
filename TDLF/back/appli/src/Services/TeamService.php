@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: benoit-xavierhouvet
- * Date: 22/07/2017
- * Time: 15:18
+ * Date: 05/07/2017
+ * Time: 00:26
  */
 
 namespace TDLF\Services;
@@ -23,5 +24,4 @@ class TeamService
     public function getTeam($id) {
         return $this->app['entityManager']->find("TDLF\Entity\Team", $id);
     }
-
 }
