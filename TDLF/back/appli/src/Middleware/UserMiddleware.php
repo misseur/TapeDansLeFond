@@ -20,5 +20,21 @@ class UserMiddleware implements ServiceProviderInterface
                     return $app->json('Unthorized', 401);
             };
         });
+
+        $app['loadUser'] = $app->protect(function () {
+            return function (Request $req, Application $app) {
+                $user_id = $req->attributes->get('user', null);
+
+                if ($user_id == null)
+                    return $app->json('User Id must be provided', 400);
+
+                $user = $app['UserSvc']->getUser($user_id);
+
+                if ($user == null)
+                    return $app->json('User not found', 404);
+
+                $req->attributes->set('user', $user);
+            };
+        });
     }
 }
