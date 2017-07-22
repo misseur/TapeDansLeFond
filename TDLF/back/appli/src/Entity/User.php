@@ -8,6 +8,7 @@
 
 namespace TDLF\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -17,127 +18,194 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+    public function __construct()
+    {
+        $this->teams = new ArrayCollection();
+    }
+
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @id @Column(type="integer") @GeneratedValue
      */
     private $id;
 
     /**
-     * @Column(type="string")
+     * @name @Column(type="string", nullable=true)
      */
     private $name;
 
-
     /**
-     * @uuid @Column(type="string")
+     * @email @Column(type="string", unique=true)
      */
-     private $uuid;
-     
-     /**
-      * @email @Column(type="string")
-      */
-      
+
     private $email;
-      
-      /**
-       * @sha512pass @Column(type="string")
-       */
-       
-    private $sha512pass;
 
     /**
-     * @return int
+     * @password @Column(type="string")
+     */
+
+    private $password;
+
+    /**
+     * @token @Column(type="string", nullable=true)
+     */
+
+    private $token;
+
+    /**
+     * Many Users have one Compagny
+     * @ManyToOne(targetEntity="Compagny")
+     * @JoinColumn(name="compagny_id", referencedColumnName="id")
+     */
+
+    private $compagny;
+
+    /**
+     * Many Users have many Teams
+     *
+     * @var ArrayCollection Team $teams
+     *
+     * @ManyToMany(targetEntity="Team", inversedBy="players", cascade={"persist", "merge"})
+     * @JoinTable(name="users_teams",
+     *     joinColumns={@JoinColumn(name="User_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@JoinColumn(name="Team_id", referencedColumnName="id")}
+     * )
+     */
+
+    private $teams;
+
+    /**
+     * @role @Column(type="string", nullable=true)
+     */
+
+    private $role;
+
+    /**
+     * @return mixed
      */
     public function getId()
     {
         return $this->id;
     }
-    
-    /**
-     * @return string
-     */
-     
-     public function getUUID()
-     {
-         return $this->uuid;
-     }
 
     /**
-     * @param int $id
-     *
-     * @return User
+     * @param mixed $id
      */
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
     }
-    
-    /**
-     * @param string $uuid;
-     * 
-     * @return User
-     */
-     public function setUUID($uuid)
-     {
-         $this->uuid = $uuid;
-         return $this;
-     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getName()
     {
         return $this->name;
     }
-    
-    /**
-     * @return string
-     */
-     public function getEmail()
-     {
-         return $this->email;
-     }
 
     /**
-     * @param string $name
-     *
-     * @return User
+     * @param mixed $name
      */
     public function setName($name)
     {
         $this->name = $name;
-        return $this;
     }
-    
+
     /**
-     * @param string $email
-     * 
-     * @return User
+     * @return mixed
      */
-     public function setEmail($email)
-     {
-         $this->email = $email;
-         return $this;
-     }
-     
-     /**
-      * @param string $pass
-      * 
-      * @return User
-      */
-      public function setPass($sha512pass)
-      {
-          $this->sha512pass = $sha512pass;
-          return $this;
-      }
-      
-      /**
-       * @return string
-       */
-       public function getPass()
-       {
-           return $this->sha512pass;
-       }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompagny()
+    {
+        return $this->compagny;
+    }
+
+    /**
+     * @param mixed $compagny
+     */
+    public function setCompagny($compagny)
+    {
+        $this->compagny = $compagny;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTeams()
+    {
+        return $this->teams;
+    }
+
+    /**
+     * @param ArrayCollection $teams
+     */
+    public function setTeams($teams)
+    {
+        $this->teams = $teams;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+
 }

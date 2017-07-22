@@ -16,10 +16,8 @@ class UserMiddleware implements ServiceProviderInterface
     {
         $app['Hello'] = $app->protect(function ($name) {
             return function (Request $req, Application $app) use ($name) {
-                return $app->json(
-                    "Hello {$name}",
-                    Response::HTTP_BAD_REQUEST
-                );
+                if (!($app['User']->isAuth($app, $req)))
+                    return $app->json('Unthorized', 401);
             };
         });
     }

@@ -1,0 +1,373 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>[TDLF] Invitation à rejoindre une entreprise</title>
+    <style>
+      /* -------------------------------------
+          GLOBAL RESETS
+      ------------------------------------- */
+      img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+        max-width: 100%; }
+
+      body {
+        background-color: #4fc3f7;
+        font-family: sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 14px;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0; 
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%; }
+
+      table {
+        border-collapse: separate;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        width: 100%; }
+        table td {
+          font-family: sans-serif;
+          font-size: 14px;
+          vertical-align: top; }
+
+      /* -------------------------------------
+          BODY & CONTAINER
+      ------------------------------------- */
+
+      .body {
+        background-color: #4fc3f7;
+        width: 100%; }
+
+      /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+      .container {
+        display: block;
+        Margin: 0 auto !important;
+        /* makes it centered */
+        max-width: 580px;
+        padding: 10px;
+        width: 580px; }
+
+      /* This should also be a block element, so that it will fill 100% of the .container */
+      .content {
+        box-sizing: border-box;
+        display: block;
+        Margin: 0 auto;
+        max-width: 580px;
+        padding: 10px; }
+
+      /* -------------------------------------
+          HEADER, FOOTER, MAIN
+      ------------------------------------- */
+      .content {
+        position: relative;
+        margin-top: 180px;
+      }
+
+      svg {
+        fill: white;
+        width: 100px;
+        position: absolute;
+        top: -130px;
+        left: 50%;
+        margin-left: -45px;
+      }
+
+      /*.main {
+        background: #fff;
+        border-radius: 3px;
+        width: 100%; }
+*/
+      .wrapper {
+        box-sizing: border-box;
+        padding: 20px; }
+
+      .footer {
+        clear: both;
+        padding-top: 10px;
+        text-align: center;
+        width: 100%; }
+        .footer td,
+        .footer p,
+        .footer span,
+        .footer a {
+          color: #ffffff;
+          font-size: 12px;
+          text-align: center; }
+
+      /* -------------------------------------
+          TYPOGRAPHY
+      ------------------------------------- */
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: #ffffff;
+        font-family: 'Raleway';
+        font-size: 48px;
+        font-family: sans-serif;
+        font-weight: 400;
+        line-height: 1.4;
+        margin: 0;
+        Margin-bottom: 30px; }
+
+      h1 {
+        font-size: 35px;
+        font-weight: 300;
+        text-align: center;
+        text-transform: capitalize; }
+
+      p,
+      ul,
+      ol {
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        color: #ffffff;
+        margin: 0;
+        Margin-bottom: 15px; }
+        p li,
+        ul li,
+        ol li {
+          list-style-position: inside;
+          margin-left: 5px; }
+
+      a {
+        color: #fff;
+        text-decoration: underline; }
+
+      /* -------------------------------------
+          BUTTONS
+      ------------------------------------- */
+      .btn {
+        box-sizing: border-box;
+        width: 100%; }
+        .btn > tbody > tr > td {
+          padding-bottom: 15px; }
+        .btn table {
+          width: auto; }
+        .btn table td {
+          background-color: #ffffff;
+          border-radius: 5px;
+          text-align: center; }
+        .btn a {
+          background-color: #ffffff;
+          border: solid 1px #3498db;
+          border-radius: 5px;
+          box-sizing: border-box;
+          color: #3498db;
+          cursor: pointer;
+          display: inline-block;
+          font-size: 14px;
+          font-weight: bold;
+          margin: 0;
+          padding: 12px 25px;
+          text-decoration: none;
+          text-transform: capitalize; }
+
+      .btn-primary table td {
+        background-color: transparent; }
+
+      .btn-primary a {
+        background-color: transparent;
+        border-color: #ffffff;
+        color: #ffffff; }
+
+      /* -------------------------------------
+          OTHER STYLES THAT MIGHT BE USEFUL
+      ------------------------------------- */
+      .last {
+        margin-bottom: 0; }
+
+      .first {
+        margin-top: 0; }
+
+      .align-center {
+        text-align: center; }
+
+      .align-right {
+        text-align: right; }
+
+      .align-left {
+        text-align: left; }
+
+      .clear {
+        clear: both; }
+
+      .mt0 {
+        margin-top: 0; }
+
+      .mb0 {
+        margin-bottom: 0; }
+
+      .preheader {
+        color: transparent;
+        display: none;
+        height: 0;
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        mso-hide: all;
+        visibility: hidden;
+        width: 0; }
+
+      .powered-by a {
+        text-decoration: none; }
+
+      hr {
+        border: 0;
+        border-bottom: 1px solid #f6f6f6;
+        Margin: 20px 0; }
+
+      /* -------------------------------------
+          RESPONSIVE AND MOBILE FRIENDLY STYLES
+      ------------------------------------- */
+      @media only screen and (max-width: 620px) {
+        table[class=body] h1 {
+          font-size: 28px !important;
+          margin-bottom: 10px !important; }
+        table[class=body] p,
+        table[class=body] ul,
+        table[class=body] ol,
+        table[class=body] td,
+        table[class=body] span,
+        table[class=body] a {
+          font-size: 16px !important; }
+        table[class=body] .wrapper,
+        table[class=body] .article {
+          padding: 10px !important; }
+        table[class=body] .content {
+          padding: 0 !important; }
+        table[class=body] .container {
+          padding: 0 !important;
+          width: 100% !important; }
+        table[class=body] .main {
+          border-left-width: 0 !important;
+          border-radius: 0 !important;
+          border-right-width: 0 !important; }
+        table[class=body] .btn table {
+          width: 100% !important; }
+        table[class=body] .btn a {
+          width: 100% !important; }
+        table[class=body] .img-responsive {
+          height: auto !important;
+          max-width: 100% !important;
+          width: auto !important; }}
+
+      /* -------------------------------------
+          PRESERVE THESE STYLES IN THE HEAD
+      ------------------------------------- */
+      @media all {
+        .ExternalClass {
+          width: 100%; }
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {
+          line-height: 100%; }
+        .apple-link a {
+          color: inherit !important;
+          font-family: inherit !important;
+          font-size: inherit !important;
+          font-weight: inherit !important;
+          line-height: inherit !important;
+          text-decoration: none !important; } 
+        .btn-primary table td:hover {
+          background-color: #34495e !important; }
+        .btn-primary a:hover {
+          background-color: #34495e !important;
+          border-color: #34495e !important; } }
+
+    </style>
+  </head>
+  <body class="">
+    <table border="0" cellpadding="0" cellspacing="0" class="body">
+      <tr>
+        <td>&nbsp;</td>
+        <td class="container">
+          <div class="content">
+
+            <!-- START CENTERED WHITE CONTAINER -->
+            <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+            <table class="main">
+
+              <!-- START MAIN CONTENT AREA -->
+              <tr>
+                <tr>
+                 <svg>
+                      <g>
+                          <path d="M62.122,28.202l-0.468-0.312c-1.356-0.903-2.634-1.647-3.858-2.248c2.626-2.396,4.19-5.927,4.19-9.666   c0-7.02-5.377-12.73-11.986-12.73c-6.608,0-11.984,5.71-11.984,12.73c0,3.739,1.565,7.27,4.19,9.666   c-1.226,0.6-2.502,1.344-3.859,2.247l-0.467,0.312l-0.232,1.65c-0.716,5.062-1.457,10.295-0.202,15.46l0.089,0.367l0.277,0.256   c2.621,2.42,2.746,5.001,2.128,8.131l-0.018,0.129c-0.024,0.264-0.013,0.486,0.025,0.674l-0.017,0.004l3.146,15.29h-1.464   c-1.391,0.004-2.522,1.137-2.522,2.526v11.879c0,1.254,0.941,2.383,2.243,2.684c2.681,0.607,5.677,0.929,8.666,0.929   c2.989,0,5.985-0.321,8.673-0.93c1.296-0.3,2.237-1.429,2.237-2.683V72.69c0-1.39-1.131-2.522-2.525-2.526h-1.46l3.146-15.29   l-0.017-0.003c0.038-0.189,0.049-0.413,0.023-0.679l-0.018-0.125c-0.618-3.13-0.492-5.711,2.129-8.131l0.278-0.256l0.089-0.367   c1.255-5.167,0.514-10.401-0.202-15.463L62.122,28.202z M60.208,44.37c-3.372,3.312-3.229,6.961-2.614,10.117   c0.001,0.004,0.001,0.008,0.001,0.011l-3.736,18.166l4.552,0.026v11.879c0,0.051-0.12,0.205-0.296,0.246   c-5.005,1.133-11.23,1.132-16.222,0.001c-0.181-0.042-0.301-0.196-0.301-0.247l0.025-11.905h4.528l-3.739-18.165   c0-0.005,0-0.009,0.001-0.014c0.615-3.156,0.757-6.803-2.614-10.115c-1.025-4.585-0.366-9.244,0.331-14.168l0.075-0.537   c1.771-1.145,3.38-1.984,4.905-2.558l2.388-0.899l-2.174-1.335c-2.962-1.82-4.802-5.228-4.802-8.895   c0-5.641,4.255-10.23,9.484-10.23c5.23,0,9.486,4.589,9.486,10.23c0,3.667-1.84,7.075-4.802,8.895l-2.174,1.335l2.388,0.9   c1.523,0.574,3.132,1.413,4.904,2.559l0.075,0.535C60.575,35.125,61.234,39.783,60.208,44.37z"/>
+                          <path d="M0,30.874h32.136c-0.37,2.707-0.729,5.82-0.643,8.98H0v2.5h34.144l-0.093-1.336c-0.272-3.923,0.3-7.968,0.759-11.219   l0.201-1.425H0V30.874z"/>
+                          <path d="M100,28.374H65.047l0.202,1.425c0.459,3.25,1.031,7.295,0.758,11.219l-0.093,1.337H100v-2.5H68.565   c0.086-3.162-0.272-6.274-0.643-8.98H100V28.374z"/>
+                      </g>
+                  </svg>
+                <tr>
+                  <h1>Tape dans le fond</h1>
+                </tr>  
+                </tr>
+                <td class="wrapper">
+                  <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <p>Bonjour,</p>
+                        <p>L'équipe intel vous invite pour une recontre le : JJ/MM/AA, êtes vous disponible ?</p>
+                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                          <tbody>
+                            <tr>
+                              <td align="left">
+                                <table border="0" cellpadding="10" cellspacing="0">
+                                  <tbody>
+                                    <tr>
+                                      <td> <a href="http://localhost:3000" target="_blank">Disponible</a> </td>
+                                      <td> <a href="http://localhost:3000" target="_blank">Non disponible</a> </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <p>Merci pour votre réponse !</p>
+                        <p>Bonne chance pour vos matchs et à très vite pour un match !</p>
+                        <p>L'équipe TDLF.</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            <!-- END MAIN CONTENT AREA -->
+            </table>
+
+            <!-- START FOOTER -->
+            <div class="footer">
+              <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="content-block">
+                    <span class="apple-link">Tape Dans le Fond, 7 rue Maurice Grandcoing, 94200 Ivry-Sur-Seine</span>
+                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="content-block powered-by">
+                    Powered by tapedanslefond.io
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <!-- END FOOTER -->
+            
+          <!-- END CENTERED WHITE CONTAINER -->
+          </div>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+  </body>
+</html>
