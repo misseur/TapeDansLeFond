@@ -70,7 +70,7 @@ class User implements JsonSerializable
     private $email;
 
     /**
-     * @password @Column(type="string")
+     * @password @Column(type="string", nullable=true)
      */
 
     private $password;
@@ -108,6 +108,8 @@ class User implements JsonSerializable
      */
 
     private $role;
+
+
 
     /**
      * @return mixed

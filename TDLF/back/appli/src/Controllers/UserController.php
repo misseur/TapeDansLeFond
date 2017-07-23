@@ -68,7 +68,12 @@ class UserController implements ControllerProviderInterface
 
     public function loginUser(Application $app, Request $req) {
         $email = $req->get('email');
-        $pass = $req->get('password');
+        $pass = $req->get('password', null);
+
+        if ($pass === null) {
+            return $app->json('Bad password', 400);
+        }
+        
         try {
             $user = $app['User']->getUserByEmail($email);
         } catch (\Exception $exception) {
