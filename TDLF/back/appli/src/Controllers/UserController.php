@@ -28,8 +28,6 @@ class UserController implements ControllerProviderInterface
             ->before($app['isAuth']());
         $controllers->post('/user/teams', [$this, 'getTeams'])->before($app['isAuth']());
 
-        $controllers->post('/invite/company', [$this, 'sendMailInviteUser'])
-            ->before($app['isAuth']());
 
         $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
 
@@ -44,19 +42,6 @@ class UserController implements ControllerProviderInterface
         if ($user->getCompany() == null)
             return $app->json(null);
         return $app->json($user->getCompany(), 200);
-    }
-
-    public function sendMailInviteUser(Application $app, Request $req, User $user) {
-        $email = $req->get('email');
-        $from = array('tdlf7fault@gmail.com' => 'Tape Dans Le Fond');
-        $to = array($email => $email);
-        $message = $app['mailerSvc']->getMessage("Invitation a Tape Dans Le Fond", $from, $to);
-        $message = $app['mailerSvc']->setSiteInvitationBody($message, [
-            'name' => $user->getName(),
-            'email' => $user->getEmail()
-        ]);
-        $result = $app['mailerSvc']->sendMessage($message);
-        return $app->json($result, 200);
     }
 
     public function createUser(Application $app, Request $req, $id) {

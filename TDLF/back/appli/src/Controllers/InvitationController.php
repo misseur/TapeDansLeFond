@@ -36,7 +36,7 @@ class InvitationController implements ControllerProviderInterface
             ->before($app['loadTeam']())
         ;
 
-        $controllers->post('/invite/email', [$this, 'inviteToCompany'])
+        $controllers->post('/invite/company', [$this, 'inviteToCompany'])
             ->before($app['isAuth']())
         ;
 
