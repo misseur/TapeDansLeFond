@@ -10,6 +10,7 @@ import {
     setClient,
     unsetClient,
 } from '../client/actions';
+import { setUser } from '../User/actions';
 import {
   CLIENT_UNSET,
 } from '../client/constants';
@@ -26,7 +27,7 @@ function loginApi(email, password) {
         body: JSON.stringify({ email, password }),
     })
     .then(handleApiErrors)
-    .then(response => response.json())
+    .then(response => trace('RESP')(response).json())
     .then(json => json)
     .catch((error) => { throw error; });
 }
@@ -41,15 +42,15 @@ function* logout() {
 }
 
 function* loginFlow(email, password) {
-    console.log('login');
-    let token;
+    let response;
     try {
-        token = yield call(loginApi, email, password);
-        yield put(setClient(token));
+        response = yield call(loginApi, email, password);
+        yield put(setClient(response.token));
+        yield put(setUser(response.user));
         yield put({ type: LOGIN_SUCCESS });
         // if (IS_CLIENT) {
             // localStorage.setItem('token', JSON.stringify(token));
-        document.cookie = `jwt=${encodeURIComponent(JSON.stringify(token))}`;
+        document.cookie = `jwt=${encodeURIComponent(JSON.stringify(response.token))}`;
             // document.cookie = `jwt=${JSON.stringify(token)}`;
         // }
         browserHistory.push('/dashboard');
@@ -60,7 +61,7 @@ function* loginFlow(email, password) {
             browserHistory.push('/home');
         }
     }
-    return token;
+    return response;
 }
 
 function* loginWatcher() {

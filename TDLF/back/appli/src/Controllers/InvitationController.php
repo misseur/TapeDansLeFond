@@ -38,7 +38,6 @@ class CompagnyController implements ControllerProviderInterface
 
     public function inviteToTeam(Application $app, Request $req, User $user, User $player, Team $team)
     {
-        
         $message = $app['mailerSvc']->getMessage(
             '[Tape dans le fond] Invitation a la team de ' . $user->getName(),
             $user->getEmail(),

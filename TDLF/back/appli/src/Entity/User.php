@@ -10,25 +10,46 @@ namespace TDLF\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 
 /**
  *
  * @Entity @Table(name="user")
  */
-class User
+class User implements JsonSerializable
 {
     public function __construct()
     {
         $this->teams = new ArrayCollection();
     }
 
+    public function miniSerialize() {
+        return [
+            'type' => 'user',
+            'id' => $this->id
+        ];
+    }
+
+    public function simpleSerialize() {
+        return [
+            'type' => "user",
+            'id' => $this->id,
+            'attributes' => [
+                'email' => $this->email,
+                'name' => $this->name
+            ],
+            'relationships' => [
+                'company' => [
+                    'data' => ($this->company == NULL) ? null : $this->company->miniSerialize() ]
+            ]
+        ];
+    }
+
     public function jsonSerialize() {
         return [
-            'name' => $this->name,
-            'id' => $this->id,
-            'email' => $this->email,
-            'company' => $this->company
+            'data' => $this->simpleSerialize(),
+            'included' => ($this->company == NULL) ? null : $this->company->simpleSerialize()
         ];
     }
 

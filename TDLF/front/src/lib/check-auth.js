@@ -1,4 +1,5 @@
 import { setClient, unsetClient } from '../client/actions';
+import { getUser } from '../User/actions';
 
 function checkAuthorization(dispatch, client) {
     console.log('checkAuthorization')
@@ -20,6 +21,7 @@ function checkAuthorization(dispatch, client) {
 
         // otherwise, dispatch the token to our setClient action
         dispatch(setClient(token));
+        // dispatch(getUser());
         return true;
     }
     return false;

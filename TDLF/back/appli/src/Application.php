@@ -184,10 +184,10 @@ class Application extends Silex\Application
             return new \TDLF\Services\TeamService($app);
         };
 
-        $this['TeamSvc'] = function ($app) {
-            return new \TDLF\Services\CompagnyService($app);
+        $this['LeagueSvc'] = function ($app) {
+            return new \TDLF\Services\LeagueService($app);
         };
-
+        
         $this['flush'] = function ($app) {
           return function ($entity) use ($app) {
               $app['entityManager']->persist($entity);

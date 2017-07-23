@@ -38,6 +38,10 @@ class TeamController implements ControllerProviderInterface
 
         $controllers->get('/team/{id}', [$this, 'getTeam'])
             ->before($app['isAuth']());
+            
+        $controllers->get('/team/leagues', [$this, 'getLeagues'])
+			->before($app['isAuth']());
+			
 
         $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
         return $controllers;
@@ -82,8 +86,8 @@ class TeamController implements ControllerProviderInterface
             $user->getTeams()->add($team);
             $app['entityManager']->persist($user);
             $app['entityManager']->flush();
-            return $app->json($team, 200);
-        }
+		}
+            
         else
             return $app->json("Team have already 2 players", 401);
     }
@@ -107,4 +111,17 @@ class TeamController implements ControllerProviderInterface
         }
         return $result;
     }
+    
+    public function getLeagues(Application $app, Request $req, User $user)
+    {
+		$teams = $user->getTeams();
+		$leagues = array();
+		
+		for ($i = 0; $i < count($teams); ++$i)
+		{
+			$leagues[$teams[$i]] = $teams->getLeagues();
+		}
+		
+		return $app->json($leagues, 200);
+	}
 }

@@ -101,4 +101,13 @@ class MailManager
             $params
         );
     }
+
+    public function setSiteInvitationBody($message, $params)
+    {
+        return $this->setHtmlBody(
+            $message,
+            __DIR__ . '/../Mail/site-invitation-mail.html.twig',
+            $params
+        );
+    }
 }
