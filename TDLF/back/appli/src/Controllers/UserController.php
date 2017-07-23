@@ -28,7 +28,7 @@ class UserController implements ControllerProviderInterface
             ->before($app['isAuth']());
         $controllers->post('/user/teams', [$this, 'getTeams'])->before($app['isAuth']());
 
-        $controllers->post('/user/invite', [$this, 'sendMailInviteUser'])
+        $controllers->post('/invite/company', [$this, 'sendMailInviteUser'])
             ->before($app['isAuth']());
 
         $app['cors-enabled']($controllers, ['allowOrigin' => '*']);

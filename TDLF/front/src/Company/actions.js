@@ -8,6 +8,9 @@ import {
     COMPANY_REQUESTING_ALL,
     COMPANY_REQUEST_ALL_SUCCESS,
     COMPANY_REQUEST_ALL_ERROR,
+    COMPANY_INVITATION_EMAIL,
+    COMPANY_INVITATION_EMAIL_SUCCESS,
+    COMPANY_INVITATION_EMAIL_ERROR,
 } from './constants';
 
 export const companyCreate = (client, user, company) => ({
@@ -55,5 +58,20 @@ export const companyRequestAllSuccess = companies => ({
 
 export const companyRequestAllError = error => ({
     type: COMPANY_REQUEST_ALL_ERROR,
+    error,
+});
+
+export const companyEmail = (client, email) => ({
+    type: COMPANY_INVITATION_EMAIL,
+    client,
+    email,
+});
+
+export const companyEmailSuccess = () => ({
+    type: COMPANY_INVITATION_EMAIL_SUCCESS,
+});
+
+export const companyEmailError = error => ({
+    type: COMPANY_INVITATION_EMAIL_ERROR,
     error,
 });

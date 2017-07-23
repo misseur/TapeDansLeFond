@@ -10,6 +10,9 @@ import {
     COMPANY_REQUESTING_ALL,
     COMPANY_REQUEST_ALL_SUCCESS,
     COMPANY_REQUEST_ALL_ERROR,
+    COMPANY_INVITATION_EMAIL,
+    COMPANY_INVITATION_EMAIL_SUCCESS,
+    COMPANY_INVITATION_EMAIL_ERROR,
 } from './constants';
 
 const initialState = {
@@ -29,7 +32,7 @@ function companyReducer(state = initialState, action) {
             successful: false,
             messages: [
                 {
-                    body: `Widget: ${action.company.name} being created...`,
+                    body: `Company: ${action.company.name} being created...`,
                     time: new Date(),
                 },
             ],
@@ -43,7 +46,7 @@ function companyReducer(state = initialState, action) {
             successful: true,
             messages: [
                 {
-                    body: `Widget: ${action.company.name} awesomely created!`,
+                    body: `Company: ${action.company.name} awesomely created!`,
                     time: new Date(),
                 },
             ],
@@ -143,6 +146,43 @@ function companyReducer(state = initialState, action) {
                     body: action.error.toString(),
                     time: new Date(),
                 }],
+        };
+    case COMPANY_INVITATION_EMAIL:
+        return {
+            ...state,
+            requesting: true,
+            successful: false,
+            messages: [
+                {
+                    body: `Company: Email being sent...`,
+                    time: new Date(),
+                },
+            ],
+            errors: [],
+        };
+    case COMPANY_INVITATION_EMAIL_SUCCESS:
+        return {
+            ...state,
+            requesting: false,
+            successful: true,
+            messages: [
+                {
+                    body: 'Company: Email envoyé',
+                    time: new Date(),
+                },
+            ],
+            errors: [],
+        };
+    case COMPANY_INVITATION_EMAIL_ERROR:
+        return {
+            ...state,
+            requesting: false,
+            successful: false,
+            messages: [],
+            errors: state.errors.concat[{
+                body: action.error.toString(),
+                time: new Date(),
+            }],
         };
     default:
         return state;
