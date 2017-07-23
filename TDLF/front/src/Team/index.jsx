@@ -1,22 +1,19 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm, Field } from 'redux-form';
 import { connect } from 'vitaminjs/react-redux';
 import autobind from 'autobind-decorator';
 import { compose } from 'ramda';
+import MailIcon from 'material-ui/svg-icons/communication/mail-outline';
+import AddIcon from 'material-ui/svg-icons/content/add';
+import { RaisedButton } from 'material-ui';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
-import Messages from '../notifications/Messages';
-import Errors from '../notifications/Errors';
-import FormTextField from '../common/FormTextField';
+import AddForm from './AddForm';
 
 import { teamCreate, teamRequest } from './actions';
 
-const nameRequired = value => (value ? undefined : 'Name Required');
-
 class Team extends Component {
     static propTypes = {
-        handleSubmit: PropTypes.func.isRequired,
-        invalid: PropTypes.bool.isRequired,
         client: PropTypes.shape({
             id: PropTypes.number.isRequired,
             token: PropTypes.object.isRequired,
@@ -28,13 +25,18 @@ class Team extends Component {
             messages: PropTypes.array,
             errors: PropTypes.array,
         }).isRequired,
-        teamCreate: PropTypes.func.isRequired,
+        muiTheme: PropTypes.shape({
+            palette: PropTypes.shape({ primary2Color: PropTypes.string.isRequired }),
+        }),
         teamRequest: PropTypes.func.isRequired,
-        reset: PropTypes.func.isRequired,
     };
 
     constructor(props) {
         super(props);
+        this.state = {
+            creationPending: false,
+
+        };
         // this.fetchTeams();
     }
 
@@ -44,51 +46,28 @@ class Team extends Component {
         return false;
     }
 
-    submit(team) {
-        const { client, teamCreate, reset } = this.props;
-        teamCreate(client, team);
-        // reset the form upon submit.
-        reset();
+    handleCreate() {
+        this.setState({ creationPending: true });
     }
+
+    handleCancelCreation() {
+        this.setState({ creationPending: false });
+    }
+
     render() {
-        console.log('props', this.props);
         const {
-            handleSubmit,
-            invalid,
-            teams: { list, requesting, successful, messages, errors },
+            teams: { list, requesting },
+            muiTheme: { palette: { primary2Color } },
         } = this.props;
 
         return (
-            <div className="widgets">
-                <div className="widget-form">
-                    <form onSubmit={handleSubmit(this.submit)}>
-                        <h1>CREATE THE TEAM</h1>
-                        <label htmlFor="name">Name</label>
-                        <Field
-                            name="name"
-                            label="Nom"
-                            type="text"
-                            id="name"
-                            component={FormTextField}
-                            validate={nameRequired}
-                        />
-                        <button disabled={invalid} action="submit">
-                            CREATE
-                        </button>
-                    </form>
-                    <hr />
-                    <div className="widget-messages">
-                        {requesting && <span>Creating team...</span>}
-                        {!requesting &&
-                            !!errors.length &&
-                            <Errors message="Failure to create Widget due to:" errors={errors} />}
-                        {!requesting &&
-                            successful &&
-                            !!messages.length &&
-                            <Messages messages={messages} />}
-                    </div>
+            <div>
+                <RaisedButton label="Inviter" labelColor={primary2Color} icon={<MailIcon />} />
+                <RaisedButton label="Créer" labelColor={primary2Color} icon={<AddIcon />} onClick={this.handleCreate} />
+                <div>
+                    { this.state.creationPending && <AddForm onSubmit={this.handleCancelCreation} /> }
                 </div>
-                <div className="widget-list">
+                <div>
                     <table>
                         <thead>
                             <tr>
@@ -100,18 +79,19 @@ class Team extends Component {
                         <tbody>
                             {list &&
                                 !!list.length &&
-                                list.map(team => console.log('team', team) ||
-                                    <tr key={team.id}>
-                                        <td>
-                                            <strong>{`${team.name}`}</strong>
-                                        </td>
-                                        <td>
-                                            {`${team.description}`}
-                                        </td>
-                                        <td>
-                                            {`${team.size}`}
-                                        </td>
-                                    </tr>,
+                                list.map(
+                                    team =>
+                                        <tr key={team.id}>
+                                            <td>
+                                                <strong>{`${team.name}`}</strong>
+                                            </td>
+                                            <td>
+                                                {`${team.description}`}
+                                            </td>
+                                            <td>
+                                                {`${team.size}`}
+                                            </td>
+                                        </tr>,
                                 )}
                         </tbody>
                     </table>
@@ -130,6 +110,6 @@ const mapStateToProps = state => ({
 
 export default compose(
     connect(mapStateToProps, { teamCreate, teamRequest }),
-    reduxForm({ form: 'teams' }),
+    muiThemeable(),
     autobind,
 )(Team);
