@@ -146,6 +146,28 @@ class Team implements JsonSerializable
     {
         $this->players = $players;
     }
+    
+    /**
+     * @return ArrayCollection
+     */
+    public function getLeagues()
+    {
+		return $this->leagues;
+	}
+	
+	/*
+	 * @param ArrayCollection $leagues
+	 * 
+	 */
+	public function setLeagues($leagues)
+	{
+		$this->leagues = $leagues;
+	}
 
+	/**
+	 * @var ArrayCollection League $players
+	 * @ManyToMany(targetEntity="League", inversedBy="teams")
+	 */
+	private $leagues;
 
 }

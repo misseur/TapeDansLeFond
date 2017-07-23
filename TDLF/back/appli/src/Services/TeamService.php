@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: benoit-xavierhouvet
- * Date: 05/07/2017
- * Time: 00:26
- */
-
 namespace TDLF\Services;
 
 use Silex\Application;

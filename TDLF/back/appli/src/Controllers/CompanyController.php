@@ -58,9 +58,10 @@ class CompanyController implements ControllerProviderInterface
         return $app->json("Company associate", 200);
     }
 
-
     public function createCompany(Application $app, Request $req, User $user)
     {
+        if ($user->getCompany() != null)
+            return ($app->json("User have already a company", 401));
         $name = $req->get('name');
         $company = new Company();
         $company->setName($name);
@@ -68,37 +69,35 @@ class CompanyController implements ControllerProviderInterface
         $user->setCompany($company);
         $app['flush']($company);
         $app['flush']($user);
-        return $app->json($company->getId(), 200);
+        return $app->json($company, 200);
     }
 
-    public function getCompany(Application $app, Request $req, Company $Company) {
-        return $app->json($Company, 200);
+    public function getCompany(Application $app, Request $req, Company $company) {
+        return $app->json($company, 200);
     }
 
     public function allCompany(Application $app, Request $req = NULL) {
-        $Company = $app['Company']->getAllCompany();
-        return $app->json($Company, 200);
+        $company = $app['Company']->getAllCompany();
+        return $app->json($company, 200);
     }
 
     public function updateCompany(Application $app, Request $req, User $user) {
-        $Company = $user->getCompany();
-        if ($Company == NULL || $Company->getAdmin)
+        $company = $user->getCompany();
+        if ($company == NULL || $company->getAdmin)
             return $app->json("The user doesn't have a Company registred", 400);
         $address = $req->get('address');
         $cp = $req->get('cp');
         $city = $req->get('city');
         $logo = $req->get('logo');
         if (!empty($address))
-            $Company->setAddress($address);
+            $company->setAddress($address);
         if (!empty($cp))
-            $Company->setPostalCode($cp);
+            $company->setPostalCode($cp);
         if (!empty($city))
-            $Company->setCity($city);
+            $company->setCity($city);
         if (!empty($logo))
-            $Company->setLogo($logo);
-        $app['flush']($Company);
-        return $app->json($app['Company']->getCompany($Company->getId()), 200);
+            $company->setLogo($logo);
+        $app['flush']($company);
+        return $app->json($app['Company']->getCompany($company->getId()), 200);
     }
-
-
 }

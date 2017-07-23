@@ -20,23 +20,41 @@ class UserController implements ControllerProviderInterface
 
         $controllers->post('/register', [$this, 'registerUser']);
         $controllers->post('/login', [$this, 'loginUser']);
+        $controllers->get('/user', [$this, 'getUser'])
+            ->before($app['isAuth']());
+        $controllers->get('/user/company', [$this, 'getCompanyUser'])
+            ->before($app['isAuth']());
         $controllers->post('/logout', [$this, 'logoutUser'])
             ->before($app['isAuth']());
-        $controllers->post('/toto', [$this, 'sendMail']);
+        $controllers->post('/user/teams', [$this, 'getTeams'])->before($app['isAuth']());
+
+        $controllers->post('/invite/company', [$this, 'sendMailInviteUser'])
+            ->before($app['isAuth']());
+
         $app['cors-enabled']($controllers, ['allowOrigin' => '*']);
 
         return $controllers;
     }
 
-    public function sendMail(Application $app, Request $req) {
-        $subject = $req->get('subject');
-        $content = $req->get('body');
-        $name = $req->get('name');
+    public function getUser(Application $app, Request $req, User $user) {
+        return $app->json($user, 200);
+    }
+
+    public function getCompanyUser(Application $app, Request $req, User $user) {
+        if ($user->getCompany() == null)
+            return $app->json(null);
+        return $app->json($user->getCompany(), 200);
+    }
+
+    public function sendMailInviteUser(Application $app, Request $req, User $user) {
         $email = $req->get('email');
         $from = array('tdlf7fault@gmail.com' => 'Tape Dans Le Fond');
-        $to = array($email => $name);
-        $message = $app['mailerSvc']->getMessage($subject, $from, $to);
-        $message = $app['mailerSvc']->setTeamInvitationBody($message, ['bloub' => 'bloub']);
+        $to = array($email => $email);
+        $message = $app['mailerSvc']->getMessage("Invitation a Tape Dans Le Fond", $from, $to);
+        $message = $app['mailerSvc']->setSiteInvitationBody($message, [
+            'name' => $user->getName(),
+            'email' => $user->getEmail()
+        ]);
         $result = $app['mailerSvc']->sendMessage($message);
         return $app->json($result, 200);
     }
@@ -44,8 +62,7 @@ class UserController implements ControllerProviderInterface
     public function createUser(Application $app, Request $req, $id) {
         $user = new Entity\User();
         $user->setName($id);
-        $app['entityManager']->persist($user);
-        $app['entityManager']->flush();
+        $app['flush']($user);
         return $user->getId();
     }
 
@@ -60,7 +77,11 @@ class UserController implements ControllerProviderInterface
         if ($user->getPassword() != $pass)
             return $app->json('Bad Password', 400);
         else {
-            return $app->json($this->goodCredentials($app, $user), 200);
+            return $app->json(
+                array(
+                    'token' => $this->goodCredentials($app, $user),
+                    'user' => $user
+                ), 200);
         }
     }
 
@@ -83,8 +104,7 @@ class UserController implements ControllerProviderInterface
             $token = hash('sha256', $token);
         }
         $user->setToken($token);
-        $app['entityManager']->persist($user);
-        $app['entityManager']->flush();
+        $app['flush']($user);
         return [
             'token' => $token,
             'expire' => $date,
@@ -105,12 +125,16 @@ class UserController implements ControllerProviderInterface
         $user->setEmail($email);
         $user->setPassword($shapass);
         try {
-            $app['entityManager']->persist($user);
-            $app['entityManager']->flush();
+            $app['flush']($user);
         } catch (Exception $e) {
+			return $app->json($e->getMessage(), 400);
             return $app->json("Email déjà enregistré", 400);
         }
         return $app->json($user->getId(), 200);
     }
-
+    
+    public function getTeams(Application $app, Request $req, User $user)
+    {
+		return $app->json($user->getTeams(), 200);
+	}
 }

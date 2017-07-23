@@ -29,6 +29,36 @@ class Company implements JsonSerializable
         ];
     }
 
+    public function miniSerialize()
+    {
+        return [
+            'type' => 'company',
+            'id' => $this->id
+        ];
+    }
+
+    public function simpleSerialize() {
+        return [
+            'type' => 'company',
+            'id' => $this->id,
+            'attributes' => [
+                'name' => $this->name,
+                'address' => $this->address,
+                'postalcode' => $this->postalcode,
+                'city' => $this->city,
+                'logo' => $this->logo
+            ],
+            'relationships' => [
+                'adminUser' => [
+                    'data' => [
+                        'type' => 'user',
+                        'id' => $this->adminUser->getId()
+                    ]
+                ]
+            ]
+        ];
+    }
+
     /**
      * @id @Column(type="integer") @GeneratedValue
      */

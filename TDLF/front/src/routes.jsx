@@ -13,7 +13,7 @@ import {
 } from './lib/check-auth';
 import Team from './Team';
 import Tabs from './Tabs';
-import { unsetClient } from './client/actions';
+import Company from './Company';
 
 if (IS_CLIENT) {
     try {
@@ -53,7 +53,7 @@ export default async (store) => {
                 <Route path="dashboard" component={Dashboard} />
                 <Route path="team" component={Team} />
                 <Route path="league" component={Team} />
-                <Route path="company" component={Team} />
+                <Route path="company" component={Company} />
                 <Route path="profile" component={Team} />
             </Route>
         </Route>

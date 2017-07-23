@@ -9,8 +9,6 @@ const initialSate = {
 const reducer = function clientReducer(state = initialSate, action) {
     switch (action.type) {
     case CLIENT_SET:
-        // console.log('ACTION', action);
-        // debugger;
         return {
             id: action.token.id,
             token: action.token,

@@ -17,6 +17,7 @@
     "redux-form": "^6.6.3",
     "redux-saga": "^0.15.3",
     "regenerator-runtime": "^0.10.5",
+    "reselect": "^3.0.1",
     "vitaminjs": "^1.1.0"
   },
   "devDependencies": {
